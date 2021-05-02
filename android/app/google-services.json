@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "876900207335",
+    "firebase_url": "https://cursolojavirtual-c55f4.firebaseio.com",
+    "project_id": "cursolojavirtual-c55f4",
+    "storage_bucket": "cursolojavirtual-c55f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876900207335:android:4c03dcdaf4c9724f4cf042",
+        "android_client_info": {
+          "package_name": "br.com.isaiasbass.cursolojavirtual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876900207335-0nm59hj14dljucj252vglu4a9oh5l4tr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_0KDDL-fp6-XqNgd88Zx_Iff7kRGiY4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876900207335-0nm59hj14dljucj252vglu4a9oh5l4tr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
