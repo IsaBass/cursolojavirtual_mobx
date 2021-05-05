@@ -1,4 +1,4 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cursolojavirtual/pages/shared/cestinha_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +6,7 @@ import 'product_data.dart';
 import 'product_tile.dart';
 
 class CategoryScreen extends StatelessWidget {
-  final DocumentSnapshot snap;
+  final DocumentSnapshot<Map<String, dynamic>> snap;
 
   CategoryScreen(this.snap);
 
@@ -16,7 +16,7 @@ class CategoryScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(snap.data['title']),
+          title: Text(snap.data()['title']),
           centerTitle: true,
           actions: <Widget>[Cestinha()],
           bottom: TabBar(
@@ -28,11 +28,11 @@ class CategoryScreen extends StatelessWidget {
           ),
         ),
         body: FutureBuilder<QuerySnapshot>(
-          future: firestoreInstance
+          future: FirebaseFirestore.instance
               .collection('products')
-              .document(snap.id) // categ  clicado = blusa, calça, etc
+              .doc(snap.id) // categ  clicado = blusa, calça, etc
               .collection('items')
-              .getDocuments(),
+              .get(),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
               return Center(child: CircularProgressIndicator());
@@ -53,8 +53,8 @@ class CategoryScreen extends StatelessWidget {
                       return ProductTile(
                         tipo: "grid",
                         category: snap.id,
-                        dados:
-                            ProductData.fromDocument(snapshot.data.docs[index]),
+                        dados: ProductData.fromDocument(
+                            (snapshot.data.docs as Map)[index]),
                       );
                     },
                   ),
@@ -65,8 +65,8 @@ class CategoryScreen extends StatelessWidget {
                       return ProductTile(
                         tipo: 'list',
                         category: snap.id,
-                        dados:
-                            ProductData.fromDocument(snapshot.data.docs[index]),
+                        dados: ProductData.fromDocument(
+                            (snapshot.data.docs as Map)[index]),
                       );
                     },
                   ),

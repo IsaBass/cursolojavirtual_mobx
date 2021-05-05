@@ -1,4 +1,4 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cursolojavirtual/pages/carrinho/carrrinho_repository.dart';
 import 'package:cursolojavirtual/pages/produtos/product_data.dart';
 import 'package:cursolojavirtual/pages/userlog/userlog_mobx.dart';

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cursolojavirtual/pages/carrinho/carrinho_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -10,22 +10,24 @@ class CardDesconto extends StatelessWidget {
     void validaCupom(String cupom) {
       print('entrou na validação de desconto');
       // DocumentSnapshot doc =
-      firestoreInstance.collection('cupom').document(cupom).get().then((doc) {
+      FirebaseFirestore.instance
+          .collection('cupom')
+          .doc(cupom)
+          .get()
+          .then((doc) {
         if (doc.data == null) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: Text("Cupom Inválido"), backgroundColor: Colors.red));
-           GetIt.I<CarrinhoMobx>().atribuirDesconto(0, null);
+          GetIt.I<CarrinhoMobx>().atribuirDesconto(0, null);
         } else {
-          int perc = doc.data['percent'];
+          int perc = doc.data()['percent'];
           Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text("Desconto de $perc% aplicado"), backgroundColor: Colors.green));
-          
-          
+              content: Text("Desconto de $perc% aplicado"),
+              backgroundColor: Colors.green));
+
           GetIt.I<CarrinhoMobx>().atribuirDesconto(perc, cupom);
-          
         }
       });
-
     }
 
     return Card(

@@ -15,13 +15,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.0"
-  ansicolor:
-    dependency: transitive
-    description:
-      name: ansicolor
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   args:
     dependency: transitive
     description:
@@ -197,13 +190,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  dart_console:
-    dependency: transitive
-    description:
-      name: dart_console
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   dart_style:
     dependency: transitive
     description:
@@ -211,13 +197,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  dartz:
-    dependency: transitive
-    description:
-      name: dartz
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.0-nullsafety.1"
   fake_async:
     dependency: transitive
     description:
@@ -225,20 +204,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-  ffi:
-    dependency: transitive
-    description:
-      name: ffi
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
-  fhir_yaml:
-    dependency: transitive
-    description:
-      name: fhir_yaml
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   file:
     dependency: transitive
     description:
@@ -548,20 +513,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  recase:
-    dependency: transitive
-    description:
-      name: recase
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.0"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.26.0"
   shelf:
     dependency: transitive
     description:
@@ -581,13 +532,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  slidy:
-    dependency: "direct dev"
-    description:
-      name: slidy
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.1+1"
   source_gen:
     dependency: transitive
     description:
@@ -686,13 +630,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  win32:
-    dependency: transitive
-    description:
-      name: win32
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.5"
   yaml:
     dependency: transitive
     description:
@@ -701,5 +638,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.12.1 <3.0.0"
+  dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.24.0-6.0.pre"

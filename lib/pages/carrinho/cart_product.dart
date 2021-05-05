@@ -1,7 +1,5 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../produtos/product_data.dart';
-
-
 
 class CartProduct {
   String cid;
@@ -10,28 +8,24 @@ class CartProduct {
   int quantity;
   String size;
   ProductData productData;
-  
 
   CartProduct();
 
-  
-
-  CartProduct.fromDocument(DocumentSnapshot document) {
+  CartProduct.fromDocument(DocumentSnapshot<Map<String, dynamic>> document) {
     cid = document.id;
-    category = document.data["category"];
-    pid = document.data["pid"];
-    quantity = document.data["quantity"];
-    size = document.data["size"];
+    category = document.data()["category"];
+    pid = document.data()["pid"];
+    quantity = document.data()["quantity"];
+    size = document.data()["size"];
   }
 
+  void diminuirQuantidade() {
+    quantity--;
+  }
 
- void diminuirQuantidade() {
-   quantity--;
- }
-
- void aumentarQuantidade() {
-   quantity++;
- }
+  void aumentarQuantidade() {
+    quantity++;
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -42,10 +36,4 @@ class CartProduct {
       "product": productData.toResumedMap()
     };
   }
-  
-
-
-
-
-
 }

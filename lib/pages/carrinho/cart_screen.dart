@@ -1,8 +1,4 @@
-import 'dart:async';
-
 import 'package:cursolojavirtual/pages/carrinho/card_desconto.dart';
-import 'package:mobx/mobx.dart';
-
 import '../userlog/login_screen.dart';
 import '../userlog/userlog_mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -14,18 +10,15 @@ import 'carrinho_mobx.dart';
 import 'cart_tile.dart';
 
 class CartScreen extends StatefulWidget {
-
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  
   CarrinhoMobx meuCarrinho = GetIt.I<CarrinhoMobx>();
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: Text("Meu carrinho"),
@@ -64,19 +57,17 @@ Widget listaProdutos(BuildContext context, CarrinhoMobx meuCarrinho) {
       CardFrete(),
       SizedBox(height: 10.0),
       CardDesconto(),
-      CardSomatorios( () async {
+      CardSomatorios(() async {
         String orderId = await meuCarrinho.finishOrder();
-        if(orderId != null) {
-        print('OrderId = $orderId');
-        // chamar outra tela de mostrar num do pedido 
+        if (orderId != null) {
+          print('OrderId = $orderId');
+          // chamar outra tela de mostrar num do pedido
 
         }
       }),
-          ],
-        );
-      }
-      
-     
+    ],
+  );
+}
 
 Widget ninguemLogado(BuildContext context) {
   return Container(

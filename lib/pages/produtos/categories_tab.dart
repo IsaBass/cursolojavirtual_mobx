@@ -1,4 +1,4 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'category_tile.dart';
@@ -7,7 +7,7 @@ class ProductsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot>(
-        future: firestoreInstance.collection("products").getDocuments(),
+        future: FirebaseFirestore.instance.collection("products").get(),
         builder: (context, snapshot) {
           // switch (snapshot.connectionState) {
           //   case ConnectionState.waiting:
@@ -40,7 +40,8 @@ Widget ciculinhoCarregando() {
   );
 }
 
-Widget esperandoCarregamento(AsyncSnapshot<QuerySnapshot> snapshot, Function f) {
+Widget esperandoCarregamento(
+    AsyncSnapshot<QuerySnapshot> snapshot, Function f) {
   switch (snapshot.connectionState) {
     case ConnectionState.waiting:
     case ConnectionState.none:

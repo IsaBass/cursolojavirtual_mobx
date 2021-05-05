@@ -1,6 +1,3 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
-
-import '../produtos/product_data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -91,7 +88,7 @@ class _CartTileState extends State<CartTile> {
     }
 
     // Widget futureBuilder(/* BuildContext context, CartProduct cartProduct */) {
-      
+
     //   return FutureBuilder<DocumentSnapshot>(
     //     future: firestoreInstance
     //         .collection('products')

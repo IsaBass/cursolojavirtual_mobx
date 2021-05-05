@@ -1,4 +1,4 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cursolojavirtual/pages/userlog/userlog_mobx.dart';
 
 class CarrinhoRepository {
@@ -8,9 +8,9 @@ class CarrinhoRepository {
 
   //
   Future<String> addCartItem(Map<String, dynamic> map) async {
-    DocumentReference doc = await firestoreInstance
+    DocumentReference doc = await FirebaseFirestore.instance
         .collection("users")
-        .document(user.firebaseUser.uid)
+        .doc(user.firebaseUser.uid)
         .collection("cart")
         .add(map);
 
@@ -19,21 +19,21 @@ class CarrinhoRepository {
   }
 
   Future<void> updateCartItem(String id, Map<String, dynamic> map) async {
-    await firestoreInstance
+    await FirebaseFirestore.instance
         .collection("users")
-        .document(user.firebaseUser.uid)
+        .doc(user.firebaseUser.uid)
         .collection("cart")
-        .document(id)
-        .update(data: map);
+        .doc(id)
+        .update(map);
     return;
   }
 
   Future<void> deleteCartItem(String id) async {
-    await firestoreInstance
+    await FirebaseFirestore.instance
         .collection("users")
-        .document(user.firebaseUser.uid)
+        .doc(user.firebaseUser.uid)
         .collection("cart")
-        .document(id)
+        .doc(id)
         .delete();
     return;
   }
@@ -47,7 +47,7 @@ class CarrinhoRepository {
   }) async {
     // grava pedido
     DocumentReference refOrder =
-        await firestoreInstance.collection("orders").add({
+        await FirebaseFirestore.instance.collection("orders").add({
       "clientId": user.firebaseUser.uid,
       "products": listProdutos,
       "shipPrice": frete,
@@ -59,25 +59,25 @@ class CarrinhoRepository {
     });
 
     // grava num do pedido em registro abaixo do usuario
-    await firestoreInstance
+    await FirebaseFirestore.instance
         .collection("users")
-        .document(user.firebaseUser.uid)
+        .doc(user.firebaseUser.uid)
         .collection("orders")
-        .document(refOrder.id)
+        .doc(refOrder.id)
         .set(
       {"orderId": refOrder.id, "datahora": DateTime.now()},
     );
 
     // get de docs do carrinho para excluir
-    QuerySnapshot query = await firestoreInstance
+    QuerySnapshot query = await FirebaseFirestore.instance
         .collection("users")
-        .document(user.firebaseUser.uid)
+        .doc(user.firebaseUser.uid)
         .collection("cart")
-        .getDocuments();
+        .get();
 
     //exclusao de docs do carrinho
     for (DocumentSnapshot doc in query.docs) {
-      await doc.ref.delete();
+      await doc.reference.delete();
     }
 
     //retorna num do carrinho
@@ -85,21 +85,22 @@ class CarrinhoRepository {
   }
 
   Future<QuerySnapshot> getCarrinho() async {
-    print(' entrou em repository getCarrinho .. o userId = ${user.firebaseUser.uid}');
-    return await firestoreInstance
+    print(
+        ' entrou em repository getCarrinho .. o userId = ${user.firebaseUser.uid}');
+    return await FirebaseFirestore.instance
         .collection("users")
-        .document(user.firebaseUser.uid)
+        .doc(user.firebaseUser.uid)
         .collection("cart")
-        .getDocuments();
+        .get();
   }
 
   Future<DocumentSnapshot> getProductDados(
       String category, String productId) async {
-    return await firestoreInstance
+    return await FirebaseFirestore.instance
         .collection('products')
-        .document(category)
+        .doc(category)
         .collection('items')
-        .document(productId)
+        .doc(productId)
         .get();
     //   .then((s) {
     // p.productData = ProductData.fromDocument(s);
