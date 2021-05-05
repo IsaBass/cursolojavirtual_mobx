@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Text('Entrar'),
         centerTitle: true,
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text("CRIAR CONTA",
                 style: TextStyle(fontSize: 16.0, color: Colors.white)),
             onPressed: () {
@@ -89,19 +89,19 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 10.0),
             Align(
               alignment: Alignment.centerRight,
-              child: FlatButton(
+              child: TextButton(
                 child: Text('Esqueci Minha Senha', textAlign: TextAlign.right),
-                padding: EdgeInsets.zero,
+                // padding: EdgeInsets.zero,
                 onPressed: () {
                   if (_contEmail.text.isEmpty) {
-                    _scaffoldKey.currentState!.showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("Insira seu e-mail para recuperação"),
                       backgroundColor: Colors.redAccent,
                       duration: Duration(seconds: 2),
                     ));
                   } else {
                     userLog.recoveryPass(_contEmail.text);
-                    _scaffoldKey.currentState!.showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("Confira seu email"),
                       backgroundColor: Colors.green,
                       duration: Duration(seconds: 2),
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onSucces() {
-    _scaffoldKey.currentState!.showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Usuário LOGADO com Sucesso"),
       backgroundColor: Colors.blueAccent,
       duration: Duration(milliseconds: 500),
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onFail() {
-    _scaffoldKey.currentState!.showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Falha ao LOGAR Usuário"),
       backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 2),

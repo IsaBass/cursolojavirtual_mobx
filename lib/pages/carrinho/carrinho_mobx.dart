@@ -63,8 +63,8 @@ abstract class _CarrinhoMobxBase with Store {
     totalProds = 0;
     quantProds = 0;
     products.forEach((p) {
-      if (p.productData != null)
-        totalProds = totalProds + (p.quantity * p.productData.price);
+      // if (p.productData != null)
+      totalProds = totalProds + (p.quantity * p.productData.price);
 
       quantProds = quantProds + p.quantity;
     });
@@ -104,13 +104,8 @@ abstract class _CarrinhoMobxBase with Store {
   Future<Null> removeCartItem(CartProduct cartProduct) async {
     isLoading = true;
 
+    //
     repository.deleteCartItem(cartProduct.cid);
-    // await firestoreInstance
-    //     .collection("users")
-    //     .document(user.firebaseUser.uid)
-    //     .collection("cart")
-    //     .document(cartProduct.cid)
-    //     .delete();
 
     products.remove(cartProduct);
     somatorios();
@@ -120,50 +115,24 @@ abstract class _CarrinhoMobxBase with Store {
   @action
   Future<Null> loadCurrentCart(UserMobx user) async {
     isLoading = true;
-    if (user != null) {
-      print('entrou na funcao load carrinho');
 
-      // CollectionReference ref1 = firestoreInstance
-      //     .collection("users")
-      //     .document(user.firebaseUser.uid)
-      //     .collection("cart");
+    print('entrou na funcao load carrinho');
 
-      // CollectionReference ref2 = firestoreInstance.collection('products');
+    var qdocs = await repository.getCarrinho();
 
-      // await ref1.getDocuments().then((qdocs) {
-      //   products.addAll(qdocs.docs.map((doc) => CartProduct.fromDocument(doc)));
+    print(qdocs.docs.toString());
 
-      //   products.forEach((p) async {
-      //     await ref2
-      //         .document(p.category)
-      //         .collection('items')
-      //         .document(p.pid)
-      //         .get()
-      //         .then((s) {
-      //       p.productData = ProductData.fromDocument(s);
-      //       print('chamou somatorios do LoadCurrent Carrinho');
-      //       somatorios();
-      //     });
-      //   });
-      // });
+    for (var doc in qdocs.docs) {
+      CartProduct cc = CartProduct.fromDocument(doc);
 
-      var qdocs = await repository.getCarrinho();
-
-      print(qdocs.docs.toString());
-
-      for (var doc in qdocs.docs) {
-        CartProduct cc = CartProduct.fromDocument(doc);
-
-        await repository.getProductDados(cc.category, cc.pid).then((prod) {
-          cc.productData = ProductData.fromDocument(prod);
-          cc.productData.category = cc.category;
-          print('entrou no products.add');
-          print('cc = ' + cc.toString());
-          products.add(cc);
-        });
-      }
+      await repository.getProductDados(cc.category, cc.pid).then((prod) {
+        cc.productData = ProductData.fromDocument(prod);
+        cc.productData.category = cc.category;
+        print('entrou no products.add');
+        print('cc = ' + cc.toString());
+        products.add(cc);
+      });
     }
-    ;
 
     print('chamou somatorios do LoadCurrent Carrinho');
     somatorios();

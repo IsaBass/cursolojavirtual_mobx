@@ -37,7 +37,8 @@ class _CartScreenState extends State<CartScreen> {
           ? Center(child: CircularProgressIndicator())
           : !GetIt.I<UserMobx>().estaLogado
               ? ninguemLogado(context)
-              : (meuCarrinho.products == null || meuCarrinho.quantItens == 0)
+              : (meuCarrinho.products.length == 0 ||
+                      meuCarrinho.quantItens == 0)
                   ? semProdutos(context)
                   : listaProdutos(context, meuCarrinho),
     );

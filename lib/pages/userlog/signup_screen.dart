@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'userlog_mobx.dart';
-
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -11,7 +9,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
- 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -24,8 +21,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
- 
-
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -45,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: _contNome,
                     decoration: _inputDecoracao('Nome'),
                     validator: (text) {
-                      if (text.isEmpty) return "Nome Inválido";
+                      if (text == null || text.isEmpty) return "Nome Inválido";
                       return null;
                     },
                   ),
@@ -55,9 +50,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: _inputDecoracao('E-Mail'),
                     keyboardType: TextInputType.emailAddress,
                     validator: (text) {
-                      if (text.isEmpty || !text.contains('@'))
+                      if (text == null || text.isEmpty || !text.contains('@'))
                         return "E-mail inválido";
-                        return null;
+                      return null;
                     },
                   ),
                   SizedBox(height: 10.0),
@@ -66,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: _inputDecoracao('Senha'),
                     obscureText: true,
                     validator: (text) {
-                      if (text.isEmpty || (text.length < 6))
+                      if (text == null || text.isEmpty || (text.length < 6))
                         return "Senha inválida";
                       return null;
                     },
@@ -76,10 +71,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: _inputDecoracao('Repita a Senha'),
                     obscureText: true,
                     validator: (text) {
-                      if (text.isEmpty ||
+                      if (text == null ||
+                          text.isEmpty ||
                           (text.length < 6) ||
                           (text != _contSenha.text)) return "Senha inválida";
-                        return null;
+                      return null;
                     },
                   ),
                   SizedBox(height: 10.0),
@@ -87,7 +83,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: _contEndereco,
                     decoration: _inputDecoracao('Endereço'),
                     validator: (text) {
-                      if (text.isEmpty) return "Endereço Inválido";
+                      if (text == null || text.isEmpty)
+                        return "Endereço Inválido";
                       return null;
                     },
                   ),
@@ -103,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       textColor: Colors.white,
                       color: Theme.of(context).primaryColor,
                       onPressed: () {
-                        if (_formKey.currentState.validate()) {
+                        if (_formKey.currentState!.validate()) {
                           Map<String, dynamic> usu = {
                             "name": _contNome.text,
                             "email": _contEmail.text,
@@ -124,33 +121,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
     );
-
-    
   }
 
-
-void _onSuccess() {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
+  void _onSuccess() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Usuário Criado com Sucesso"),
       backgroundColor: Theme.of(context).primaryColor,
       duration: Duration(seconds: 2),
     ));
-    Future.delayed( Duration(seconds: 2))
-    .then( (_) {
+    Future.delayed(Duration(seconds: 2)).then((_) {
       Navigator.of(context).pop();
-
     });
   }
 
   void _onFail() {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Falha ao Criar Usuário"),
       backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 2),
     ));
-    
   }
-  
+
   InputDecoration _inputDecoracao(String hint) {
     return InputDecoration(
       hintText: hint,

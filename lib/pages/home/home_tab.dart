@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cursolojavirtual/pages/userlog/userlog_mobx.dart';
 
 import '../shared/cestinha_widget.dart';
 import '../carrinho/carrinho_mobx.dart';
@@ -11,11 +12,11 @@ import 'package:transparent_image/transparent_image.dart';
 
 class HomeTab extends StatelessWidget {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   final CarrinhoMobx carrinho = GetIt.I<CarrinhoMobx>();
 
   @override
   Widget build(BuildContext context) {
+    //
     Widget _buildBodyBack() => Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -57,7 +58,7 @@ class HomeTab extends StatelessWidget {
                           (doc) {
                             return StaggeredTile.count(
                               doc.data()["x"],
-                              doc.data()["y"],
+                              doc.data()["y"]!.toDouble(),
                             );
                           },
                         ).toList(),

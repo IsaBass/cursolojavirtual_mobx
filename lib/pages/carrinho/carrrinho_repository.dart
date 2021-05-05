@@ -10,7 +10,7 @@ class CarrinhoRepository {
   Future<String> addCartItem(Map<String, dynamic?> map) async {
     DocumentReference doc = await FirebaseFirestore.instance
         .collection("users")
-        .doc(user.firebaseUser.uid)
+        .doc(user.firebaseUser!.uid)
         .collection("cart")
         .add(map);
 
@@ -21,7 +21,7 @@ class CarrinhoRepository {
   Future<void> updateCartItem(String id, Map<String, dynamic> map) async {
     await FirebaseFirestore.instance
         .collection("users")
-        .doc(user.firebaseUser.uid)
+        .doc(user.firebaseUser!.uid)
         .collection("cart")
         .doc(id)
         .update(map);
@@ -31,7 +31,7 @@ class CarrinhoRepository {
   Future<void> deleteCartItem(String id) async {
     await FirebaseFirestore.instance
         .collection("users")
-        .doc(user.firebaseUser.uid)
+        .doc(user.firebaseUser!.uid)
         .collection("cart")
         .doc(id)
         .delete();
@@ -48,7 +48,7 @@ class CarrinhoRepository {
     // grava pedido
     DocumentReference refOrder =
         await FirebaseFirestore.instance.collection("orders").add({
-      "clientId": user.firebaseUser.uid,
+      "clientId": user.firebaseUser!.uid,
       "products": listProdutos,
       "shipPrice": frete,
       "productsPrice": totalProds,
@@ -61,7 +61,7 @@ class CarrinhoRepository {
     // grava num do pedido em registro abaixo do usuario
     await FirebaseFirestore.instance
         .collection("users")
-        .doc(user.firebaseUser.uid)
+        .doc(user.firebaseUser!.uid)
         .collection("orders")
         .doc(refOrder.id)
         .set(
@@ -71,7 +71,7 @@ class CarrinhoRepository {
     // get de docs do carrinho para excluir
     QuerySnapshot query = await FirebaseFirestore.instance
         .collection("users")
-        .doc(user.firebaseUser.uid)
+        .doc(user.firebaseUser!.uid)
         .collection("cart")
         .get();
 
@@ -86,10 +86,10 @@ class CarrinhoRepository {
 
   Future<QuerySnapshot<Map<String, dynamic>>> getCarrinho() async {
     print(
-        ' entrou em repository getCarrinho .. o userId = ${user.firebaseUser.uid}');
+        ' entrou em repository getCarrinho .. o userId = ${user.firebaseUser!.uid}');
     return await FirebaseFirestore.instance
         .collection("users")
-        .doc(user.firebaseUser.uid)
+        .doc(user.firebaseUser!.uid)
         .collection("cart")
         .get();
   }

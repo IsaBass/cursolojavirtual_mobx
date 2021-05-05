@@ -16,12 +16,16 @@ class CardDesconto extends StatelessWidget {
           .get()
           .then((doc) {
         if (doc.data() == null) {
-          Scaffold.of(context).showSnackBar(SnackBar(
+          ///
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Cupom Inválido"), backgroundColor: Colors.red));
+
           GetIt.I<CarrinhoMobx>().atribuirDesconto(0, null);
+
+          ///
         } else {
           int perc = doc.data()!['percent'];
-          Scaffold.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Desconto de $perc% aplicado"),
               backgroundColor: Colors.green));
 
@@ -46,7 +50,7 @@ class CardDesconto extends StatelessWidget {
               ),
               initialValue: GetIt.I<CarrinhoMobx>().cupomDesconto,
               onFieldSubmitted: (value) {
-                if (value.isNotEmpty && value != null) {
+                if (value.isNotEmpty) {
                   validaCupom(value);
                 }
               },

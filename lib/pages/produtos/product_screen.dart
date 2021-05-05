@@ -1,4 +1,5 @@
-import 'package:carousel_pro/carousel_pro.dart';
+// import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -111,7 +112,8 @@ class _ProductScreenState extends State<ProductScreen> {
 
                               carrinho.addCartItem(cart);
 
-                              _scaffoldKey.currentState!.showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
                                 content: Text("Produto adicionado ao carrinho"),
                                 backgroundColor: Colors.green,
                                 duration: Duration(seconds: 2),
@@ -151,17 +153,26 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget carrosselImagens(Color corPrimaria) {
     return AspectRatio(
       aspectRatio: 0.9,
-      child: Carousel(
-        images: dados.images.map((url) {
-          return NetworkImage(url);
+      child: CarouselSlider(
+        items: dados.images.map((url) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              image: DecorationImage(
+                image: NetworkImage(url),
+                // fit: widget.boxFit,
+              ),
+            ),
+          );
         }).toList(),
-        dotSize: 6.0,
-        dotSpacing: 20.0,
-        dotBgColor: Colors.transparent,
-        dotColor: corPrimaria,
-        autoplay: true,
-        //autoplayDuration: Duration(seconds: 5),
-        animationDuration: Duration(milliseconds: 500),
+        options: CarouselOptions(),
+        // dotSize: 6.0,
+        // dotSpacing: 20.0,
+        // dotBgColor: Colors.transparent,
+        // dotColor: corPrimaria,
+        // autoplay: true,
+        // //autoplayDuration: Duration(seconds: 5),
+        // animationDuration: Duration(milliseconds: 500), items: [], options: null,
       ),
     );
   }

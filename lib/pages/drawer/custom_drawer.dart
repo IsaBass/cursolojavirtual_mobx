@@ -9,12 +9,12 @@ import 'drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
   final PageController pageController;
-  final userLog = GetIt.I<UserMobx>();
 
   CustomDrawer(this.pageController);
 
   @override
   Widget build(BuildContext context) {
+    var userLog = GetIt.I<UserMobx>();
     return Drawer(
       child: Stack(
         children: <Widget>[

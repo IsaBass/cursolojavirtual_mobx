@@ -7,8 +7,16 @@ import 'pages/home/home_screen.dart';
 import 'pages/userlog/userlog_mobx.dart';
 
 void main() async {
+  //
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  //
+  await GetIt.instance.reset();
+  GetIt.I.registerSingleton<UserMobx>(new UserMobx());
+  GetIt.I
+      .registerSingleton<CarrinhoMobx>(new CarrinhoMobx(GetIt.I<UserMobx>()));
+  GetIt.I<UserMobx>().loadCurrentUser();
+  //
 
   runApp(MyApp());
 }
@@ -18,14 +26,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetIt.instance.reset();
-    GetIt.I.registerSingleton<UserMobx>(new UserMobx());
-
-    GetIt.I
-        .registerSingleton<CarrinhoMobx>(new CarrinhoMobx(GetIt.I<UserMobx>()));
-
-    GetIt.I<UserMobx>().loadCurrentUser();
-
     return MaterialApp(
       title: 'Flutter Loja Roupa',
       theme: ThemeData(
