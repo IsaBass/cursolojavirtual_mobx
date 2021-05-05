@@ -4,8 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'signup_screen.dart';
 import 'userlog_mobx.dart';
 
-
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -56,9 +54,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (text) {
-                if (text.isEmpty || !text.contains('@'))
-                  return "E-mail inválido";
-                return null;
+                if (text != null) {
+                  if (text.isEmpty || !text.contains('@'))
+                    return "E-mail inválido";
+                  return null;
+                } else {
+                  return null;
+                }
               },
             ),
             SizedBox(height: 10.0),
@@ -75,8 +77,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               validator: (text) {
-                if (text.isEmpty || (text.length < 6)) return "Senha inválida";
-                return null;
+                if (text != null) {
+                  if (text.isEmpty || (text.length < 6))
+                    return "Senha inválida";
+                  return null;
+                } else {
+                  return "Senha inválida";
+                }
               },
             ),
             SizedBox(height: 10.0),
@@ -87,14 +94,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.zero,
                 onPressed: () {
                   if (_contEmail.text.isEmpty) {
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(
+                    _scaffoldKey.currentState!.showSnackBar(SnackBar(
                       content: Text("Insira seu e-mail para recuperação"),
                       backgroundColor: Colors.redAccent,
                       duration: Duration(seconds: 2),
                     ));
                   } else {
                     userLog.recoveryPass(_contEmail.text);
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(
+                    _scaffoldKey.currentState!.showSnackBar(SnackBar(
                       content: Text("Confira seu email"),
                       backgroundColor: Colors.green,
                       duration: Duration(seconds: 2),
@@ -114,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: Colors.white,
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
+                  if (_formKey.currentState!.validate()) {
                     userLog.signIn(
                         email: _contEmail.text,
                         pass: _contSenha.text,
@@ -131,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onSucces() {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
+    _scaffoldKey.currentState!.showSnackBar(SnackBar(
       content: Text("Usuário LOGADO com Sucesso"),
       backgroundColor: Colors.blueAccent,
       duration: Duration(milliseconds: 500),
@@ -143,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onFail() {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
+    _scaffoldKey.currentState!.showSnackBar(SnackBar(
       content: Text("Falha ao LOGAR Usuário"),
       backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 2),

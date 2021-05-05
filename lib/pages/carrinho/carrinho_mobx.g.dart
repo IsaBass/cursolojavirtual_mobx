@@ -9,28 +9,28 @@ part of 'carrinho_mobx.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
-  Computed<int> _$quantItensComputed;
+  Computed<int>? _$quantItensComputed;
 
   @override
   int get quantItens =>
       (_$quantItensComputed ??= Computed<int>(() => super.quantItens,
               name: '_CarrinhoMobxBase.quantItens'))
           .value;
-  Computed<double> _$valorFreteComputed;
+  Computed<double>? _$valorFreteComputed;
 
   @override
   double get valorFrete =>
       (_$valorFreteComputed ??= Computed<double>(() => super.valorFrete,
               name: '_CarrinhoMobxBase.valorFrete'))
           .value;
-  Computed<double> _$valorDescComputed;
+  Computed<double>? _$valorDescComputed;
 
   @override
   double get valorDesc =>
       (_$valorDescComputed ??= Computed<double>(() => super.valorDesc,
               name: '_CarrinhoMobxBase.valorDesc'))
           .value;
-  Computed<double> _$valorFinalComputed;
+  Computed<double>? _$valorFinalComputed;
 
   @override
   double get valorFinal =>
@@ -203,7 +203,7 @@ mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
   }
 
   @override
-  void atribuirDesconto(int descPerc, String cupom) {
+  void atribuirDesconto(int descPerc, String? cupom) {
     final _$actionInfo = _$_CarrinhoMobxBaseActionController.startAction(
         name: '_CarrinhoMobxBase.atribuirDesconto');
     try {

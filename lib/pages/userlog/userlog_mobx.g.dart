@@ -9,7 +9,7 @@ part of 'userlog_mobx.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UserMobx on UserMobxBase, Store {
-  Computed<bool> _$estaLogadoComputed;
+  Computed<bool>? _$estaLogadoComputed;
 
   @override
   bool get estaLogado =>
@@ -20,13 +20,13 @@ mixin _$UserMobx on UserMobxBase, Store {
   final _$firebaseUserAtom = Atom(name: 'UserMobxBase.firebaseUser');
 
   @override
-  User get firebaseUser {
+  User? get firebaseUser {
     _$firebaseUserAtom.reportRead();
     return super.firebaseUser;
   }
 
   @override
-  set firebaseUser(User value) {
+  set firebaseUser(User? value) {
     _$firebaseUserAtom.reportWrite(value, super.firebaseUser, () {
       super.firebaseUser = value;
     });
@@ -81,10 +81,10 @@ mixin _$UserMobx on UserMobxBase, Store {
 
   @override
   void signUp(
-      {Map<String, dynamic> userData,
-      String pass,
-      VoidCallback onSucces,
-      VoidCallback onFail}) {
+      {required Map<String, dynamic> userData,
+      required String pass,
+      required VoidCallback onSucces,
+      required VoidCallback onFail}) {
     final _$actionInfo =
         _$UserMobxBaseActionController.startAction(name: 'UserMobxBase.signUp');
     try {
@@ -97,7 +97,10 @@ mixin _$UserMobx on UserMobxBase, Store {
 
   @override
   void signIn(
-      {String email, String pass, VoidCallback onSucces, VoidCallback onFail}) {
+      {required String email,
+      required String pass,
+      required VoidCallback onSucces,
+      required VoidCallback onFail}) {
     final _$actionInfo =
         _$UserMobxBaseActionController.startAction(name: 'UserMobxBase.signIn');
     try {

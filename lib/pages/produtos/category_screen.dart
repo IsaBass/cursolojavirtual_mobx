@@ -16,7 +16,7 @@ class CategoryScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(snap.data()['title']),
+          title: Text(snap.data()!['title']),
           centerTitle: true,
           actions: <Widget>[Cestinha()],
           bottom: TabBar(
@@ -27,7 +27,7 @@ class CategoryScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: FutureBuilder<QuerySnapshot>(
+        body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
           future: FirebaseFirestore.instance
               .collection('products')
               .doc(snap.id) // categ  clicado = blusa, calça, etc
@@ -48,25 +48,29 @@ class CategoryScreen extends StatelessWidget {
                       crossAxisSpacing: 4.0,
                       childAspectRatio: 0.65,
                     ),
-                    itemCount: snapshot.data.docs.length,
+                    itemCount: snapshot.data?.docs.length ?? 0,
                     itemBuilder: (context, index) {
                       return ProductTile(
                         tipo: "grid",
                         category: snap.id,
                         dados: ProductData.fromDocument(
-                            (snapshot.data.docs as Map)[index]),
+                            (snapshot.data!.docs)[index])
+                          ..category = snap.id,
                       );
                     },
                   ),
                   ListView.builder(
                     padding: EdgeInsets.all(4.0),
-                    itemCount: snapshot.data.docs.length,
+                    itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
+                      ProductData prod =
+                          ProductData.fromDocument((snapshot.data!.docs)[index])
+                            ..category = snap.id;
+
                       return ProductTile(
                         tipo: 'list',
                         category: snap.id,
-                        dados: ProductData.fromDocument(
-                            (snapshot.data.docs as Map)[index]),
+                        dados: prod,
                       );
                     },
                   ),

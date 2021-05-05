@@ -1,23 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../produtos/product_data.dart';
 
 class CartProduct {
   String cid;
-  String category;
+  late String category;
   String pid;
   int quantity;
-  String size;
-  ProductData productData;
+  String? size;
+  late ProductData productData;
 
-  CartProduct();
+  CartProduct({
+    required this.cid,
+    required this.category,
+    required this.pid,
+    required this.quantity,
+    this.size,
+    required this.productData,
+  });
 
-  CartProduct.fromDocument(DocumentSnapshot<Map<String, dynamic>> document) {
-    cid = document.id;
-    category = document.data()["category"];
-    pid = document.data()["pid"];
-    quantity = document.data()["quantity"];
-    size = document.data()["size"];
-  }
+  // CartProduct();
+
+  CartProduct.fromDocument(DocumentSnapshot<Map<String, dynamic>> document)
+      : cid = document.id,
+        category = document.data()!["category"] ?? '',
+        pid = document.data()!["pid"] ?? '',
+        quantity = document.data()!["quantity"] ?? '',
+        size = document.data()!["size"] ?? '';
 
   void diminuirQuantidade() {
     quantity--;

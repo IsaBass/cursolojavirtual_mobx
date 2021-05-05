@@ -7,7 +7,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'drawer_tile.dart';
 
-
 class CustomDrawer extends StatelessWidget {
   final PageController pageController;
   final userLog = GetIt.I<UserMobx>();
@@ -19,7 +18,9 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       child: Stack(
         children: <Widget>[
-          Container(decoration: _boxDecorationGradiente), // container gradiente por baixo, no Stack
+          Container(
+              decoration:
+                  _boxDecorationGradiente), // container gradiente por baixo, no Stack
           ListView(
             padding: EdgeInsets.only(left: 32.0, top: 16.0),
             children: <Widget>[
@@ -51,7 +52,7 @@ class CustomDrawer extends StatelessWidget {
     gradient: LinearGradient(
       colors: [
         Color.fromARGB(255, 203, 236, 241),
-        Colors.blue[500],
+        Colors.blue[500]!,
         Colors.white,
       ],
       begin: Alignment.topCenter,
@@ -62,8 +63,8 @@ class CustomDrawer extends StatelessWidget {
 
 class WUsuarioLogado extends StatelessWidget {
   const WUsuarioLogado({
-    Key key,
-    @required this.userLog,
+    Key? key,
+    required this.userLog,
   }) : super(key: key);
 
   final UserMobx userLog;
@@ -78,8 +79,7 @@ class WUsuarioLogado extends StatelessWidget {
         children: <Widget>[
           Observer(
             builder: (context) {
-              print(
-                  ' logado na tela? = ${(userLog.estaLogado).toString()}');
+              print(' logado na tela? = ${(userLog.estaLogado).toString()}');
               return Text(
                 'Olá, ${!userLog.estaLogado ? "" : userLog.userData["name"]}',
                 style: TextStyle(
@@ -92,9 +92,7 @@ class WUsuarioLogado extends StatelessWidget {
           GestureDetector(
             child: Observer(
                 builder: (context) => Text(
-                      userLog.estaLogado
-                          ? "Sair"
-                          : 'Entre ou cadastre-se >',
+                      userLog.estaLogado ? "Sair" : 'Entre ou cadastre-se >',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 16.0,
@@ -105,8 +103,8 @@ class WUsuarioLogado extends StatelessWidget {
               if (userLog.estaLogado)
                 userLog.signOut();
               else
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => LoginScreen()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
             },
           ),
         ],
@@ -117,7 +115,7 @@ class WUsuarioLogado extends StatelessWidget {
 
 class TituloLojaVirtual extends StatelessWidget {
   const TituloLojaVirtual({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -128,8 +126,7 @@ class TituloLojaVirtual extends StatelessWidget {
       child: Text(
         "Loja Virtual\nem Flutter",
         textAlign: TextAlign.start,
-        style: TextStyle(
-            fontSize: 34.0, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 34.0, fontWeight: FontWeight.bold),
       ),
     );
   }

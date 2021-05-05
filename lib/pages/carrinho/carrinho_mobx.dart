@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cursolojavirtual/pages/carrinho/carrrinho_repository.dart';
 import 'package:cursolojavirtual/pages/produtos/product_data.dart';
 import 'package:cursolojavirtual/pages/userlog/userlog_mobx.dart';
@@ -26,7 +25,7 @@ abstract class _CarrinhoMobxBase with Store {
   @observable
   int descontoPerc = 0;
 
-  String cupomDesconto;
+  String cupomDesconto = '';
 
   @observable
   ObservableList<CartProduct> products = ObservableList.of([]);
@@ -44,10 +43,10 @@ abstract class _CarrinhoMobxBase with Store {
   double get valorDesc => totalProds * descontoPerc / 100;
 
   @observable
-  double totalProds;
+  double totalProds = 0.00;
 
   @observable
-  int quantProds;
+  int quantProds = 0;
 
   @computed
   double get valorFinal => totalProds + valorFrete - valorDesc;
@@ -92,12 +91,12 @@ abstract class _CarrinhoMobxBase with Store {
     descontoPerc = 0;
     totalProds = 0.00;
     quantProds = 0;
-    cupomDesconto = null;
+    cupomDesconto = '';
   }
 
   @action
-  void atribuirDesconto(int descPerc, String cupom) {
-    cupomDesconto = cupom;
+  void atribuirDesconto(int descPerc, String? cupom) {
+    cupomDesconto = cupom ?? '';
     descontoPerc = descPerc;
   }
 
@@ -148,15 +147,16 @@ abstract class _CarrinhoMobxBase with Store {
       //   });
       // });
 
-      QuerySnapshot qdocs = await repository.getCarrinho();
+      var qdocs = await repository.getCarrinho();
 
       print(qdocs.docs.toString());
 
-      for (DocumentSnapshot doc in qdocs.docs) {
+      for (var doc in qdocs.docs) {
         CartProduct cc = CartProduct.fromDocument(doc);
 
         await repository.getProductDados(cc.category, cc.pid).then((prod) {
           cc.productData = ProductData.fromDocument(prod);
+          cc.productData.category = cc.category;
           print('entrou no products.add');
           print('cc = ' + cc.toString());
           products.add(cc);
@@ -212,7 +212,7 @@ abstract class _CarrinhoMobxBase with Store {
 
   @action
   Future<String> finishOrder() async {
-    if (products.length == 0) return null;
+    if (products.length == 0) return '';
     isLoading = true;
 
     String idPedido = await repository.finalizarPedido(

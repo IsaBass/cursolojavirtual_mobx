@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'category_screen.dart';
 
 class CategoryTile extends StatelessWidget {
-  final DocumentSnapshot snapshot;
+  final DocumentSnapshot<Map<String, dynamic>> snapshot;
 
   CategoryTile(this.snapshot);
 

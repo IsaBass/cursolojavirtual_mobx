@@ -53,7 +53,7 @@ class HomeTab extends StatelessWidget {
                         crossAxisCount: 2,
                         mainAxisSpacing: 1.0,
                         crossAxisSpacing: 1.0,
-                        staggeredTiles: snapshot.data.docs.map(
+                        staggeredTiles: snapshot.data!.docs.map(
                           (doc) {
                             return StaggeredTile.count(
                               doc.data()["x"],
@@ -61,7 +61,7 @@ class HomeTab extends StatelessWidget {
                             );
                           },
                         ).toList(),
-                        children: snapshot.data.docs.map((doc) {
+                        children: snapshot.data!.docs.map((doc) {
                           return FadeInImage.memoryNetwork(
                             placeholder: kTransparentImage,
                             image: doc.data()["image"],
@@ -100,7 +100,7 @@ class HomeTab extends StatelessWidget {
 class _SliverAppbar extends StatelessWidget {
   final CarrinhoMobx carrinho;
 
-  const _SliverAppbar({Key key, this.carrinho}) : super(key: key);
+  const _SliverAppbar({Key? key, required this.carrinho}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

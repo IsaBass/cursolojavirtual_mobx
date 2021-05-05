@@ -8,14 +8,15 @@ class ProductTile extends StatelessWidget {
   final String category;
   final ProductData dados;
 
-  ProductTile({this.tipo, this.dados, this.category});
+  ProductTile(
+      {required this.tipo, required this.dados, required this.category});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => ProductScreen(dados, category)));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ProductScreen(dados, category)));
         },
         child: Card(
           child: tipo == "grid"

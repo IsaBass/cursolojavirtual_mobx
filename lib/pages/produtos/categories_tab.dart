@@ -20,8 +20,10 @@ class ProductsTab extends StatelessWidget {
           //     else {
           return esperandoCarregamento(snapshot, () {
             var dividedTiles = ListTile.divideTiles(
-              tiles:
-                  snapshot.data.docs.map((docc) => CategoryTile(docc)).toList(),
+              tiles: snapshot.data!.docs
+                  .map((docc) => CategoryTile(
+                      docc as DocumentSnapshot<Map<String, dynamic>>))
+                  .toList(),
               color: Colors.grey[500],
             ).toList();
 

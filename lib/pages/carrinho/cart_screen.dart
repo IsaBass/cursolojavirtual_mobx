@@ -28,7 +28,7 @@ class _CartScreenState extends State<CartScreen> {
             padding: EdgeInsets.only(right: 8.0),
             child: Observer(
               builder: (context) => Text(
-                  '${meuCarrinho.quantItens ?? 0} ${meuCarrinho.quantItens == 1 ? "ITEM" : "ITEMS"} '),
+                  '${meuCarrinho.quantItens} ${meuCarrinho.quantItens == 1 ? "ITEM" : "ITEMS"} '),
             ),
           ),
         ],
@@ -49,9 +49,9 @@ Widget listaProdutos(BuildContext context, CarrinhoMobx meuCarrinho) {
     children: <Widget>[
       Observer(builder: (context) {
         return Column(
-          children: meuCarrinho.products.map((product) {
-            return CartTile(cartProduct: product);
-          }).toList(),
+          children: meuCarrinho.products
+              .map((product) => CartTile(cartProduct: product))
+              .toList(),
         );
       }),
       CardFrete(),
@@ -59,11 +59,8 @@ Widget listaProdutos(BuildContext context, CarrinhoMobx meuCarrinho) {
       CardDesconto(),
       CardSomatorios(() async {
         String orderId = await meuCarrinho.finishOrder();
-        if (orderId != null) {
-          print('OrderId = $orderId');
-          // chamar outra tela de mostrar num do pedido
-
-        }
+        print('OrderId = $orderId');
+        // chamar outra tela de mostrar num do pedido
       }),
     ],
   );

@@ -11,8 +11,6 @@ import '../shared/cestinha_widget.dart';
 
 import 'product_data.dart';
 
-
-
 class ProductScreen extends StatefulWidget {
   final ProductData dados;
   final String category;
@@ -30,7 +28,7 @@ class _ProductScreenState extends State<ProductScreen> {
   final userLog = GetIt.I<UserMobx>();
   final carrinho = GetIt.I<CarrinhoMobx>();
 
-  String size;
+  String? size;
 
   _ProductScreenState(this.dados);
 
@@ -42,7 +40,7 @@ class _ProductScreenState extends State<ProductScreen> {
       appBar: AppBar(
         title: Text(dados.title),
         centerTitle: true,
-        actions: <Widget>[ Cestinha() ],
+        actions: <Widget>[Cestinha()],
       ),
       body: ListView(
         children: <Widget>[
@@ -96,17 +94,24 @@ class _ProductScreenState extends State<ProductScreen> {
                     onPressed: size != null
                         ? () {
                             if (userLog.estaLogado) {
-                              CartProduct cart = new CartProduct();
+                              CartProduct cart = new CartProduct(
+                                category: widget.category,
+                                cid: '',
+                                pid: dados.id,
+                                productData: dados,
+                                quantity: 1,
+                                size: size,
+                              );
 
-                              cart.quantity = 1;
-                              cart.size = size;
-                              cart.productData = dados;
-                              cart.pid = dados.id;
-                              cart.category = widget.category; 
+                              // cart.quantity = 1;
+                              // cart.size = size;
+                              // cart.productData = dados;
+                              // cart.pid = dados.id;
+                              // cart.category = widget.category;
 
                               carrinho.addCartItem(cart);
 
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              _scaffoldKey.currentState!.showSnackBar(SnackBar(
                                 content: Text("Produto adicionado ao carrinho"),
                                 backgroundColor: Colors.green,
                                 duration: Duration(seconds: 2),
@@ -165,7 +170,7 @@ class _ProductScreenState extends State<ProductScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4.0)),
           border: Border.all(
-            color: s == size ? corPrimaria : Colors.grey[500],
+            color: s == size ? corPrimaria : Colors.grey[500]!,
             width: 3.0,
           ),
         ),

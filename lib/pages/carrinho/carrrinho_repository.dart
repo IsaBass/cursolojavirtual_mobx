@@ -7,15 +7,15 @@ class CarrinhoRepository {
   CarrinhoRepository(this.user);
 
   //
-  Future<String> addCartItem(Map<String, dynamic> map) async {
+  Future<String> addCartItem(Map<String, dynamic?> map) async {
     DocumentReference doc = await FirebaseFirestore.instance
         .collection("users")
         .doc(user.firebaseUser.uid)
         .collection("cart")
         .add(map);
 
-    if (doc != null) return doc.id;
-    return null;
+    // if (doc != null) return doc.id;
+    return doc.id;
   }
 
   Future<void> updateCartItem(String id, Map<String, dynamic> map) async {
@@ -39,11 +39,11 @@ class CarrinhoRepository {
   }
 
   Future<String> finalizarPedido({
-    List<Map<String, dynamic>> listProdutos,
-    double frete,
-    double totalProds,
-    int descontoPerc,
-    double valorFinal,
+    required List<Map<String, dynamic>> listProdutos,
+    required double frete,
+    required double totalProds,
+    required int descontoPerc,
+    required double valorFinal,
   }) async {
     // grava pedido
     DocumentReference refOrder =
@@ -84,7 +84,7 @@ class CarrinhoRepository {
     return refOrder.id;
   }
 
-  Future<QuerySnapshot> getCarrinho() async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getCarrinho() async {
     print(
         ' entrou em repository getCarrinho .. o userId = ${user.firebaseUser.uid}');
     return await FirebaseFirestore.instance
@@ -94,7 +94,7 @@ class CarrinhoRepository {
         .get();
   }
 
-  Future<DocumentSnapshot> getProductDados(
+  Future<DocumentSnapshot<Map<String, dynamic>>> getProductDados(
       String category, String productId) async {
     return await FirebaseFirestore.instance
         .collection('products')
