@@ -7,10 +7,11 @@ class CardSomatorios extends StatelessWidget {
   final VoidCallback buy;
 
   CardSomatorios(this.buy);
+  //
+  CarrinhoMobx carrinho = GetIt.I<CarrinhoMobx>();
 
   @override
   Widget build(BuildContext context) {
-    CarrinhoMobx carrinho = GetIt.I<CarrinhoMobx>();
     return Observer(builder: (context) {
       return Card(
         margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),

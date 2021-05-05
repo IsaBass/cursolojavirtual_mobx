@@ -1,4 +1,5 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../shared/cestinha_widget.dart';
 import '../carrinho/carrinho_mobx.dart';
 
@@ -9,7 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class HomeTab extends StatelessWidget {
-  final Firestore firestore = firestoreInstance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   final CarrinhoMobx carrinho = GetIt.I<CarrinhoMobx>();
 
@@ -34,36 +35,40 @@ class HomeTab extends StatelessWidget {
         CustomScrollView(
           slivers: <Widget>[
             _SliverAppbar(carrinho: carrinho),
-            FutureBuilder<QuerySnapshot>(
-              future:
-                  firestore.collection("home").orderBy("pos").getDocuments(),
+            FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              future: firestore.collection("home").orderBy("pos").get(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData)
-                  return SliverToBoxAdapter(
-                    child: Container(
-                      height: 200.0,
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ),
-                    ),
-                  );
-                else
-                  return SliverStaggeredGrid.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 1.0,
-                    crossAxisSpacing: 1.0,
-                    staggeredTiles: snapshot.data.docs.map((doc) {
-                      return StaggeredTile.count(doc.data["x"], doc.data["y"]);
-                    }).toList(),
-                    children: snapshot.data.docs.map((doc) {
-                      return FadeInImage.memoryNetwork(
-                        placeholder: kTransparentImage,
-                        image: doc.data["image"],
-                        fit: BoxFit.cover,
+                return (!snapshot.hasData)
+                    ? SliverToBoxAdapter(
+                        child: Container(
+                          height: 200.0,
+                          alignment: Alignment.center,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        ),
+                      )
+                    : SliverStaggeredGrid.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 1.0,
+                        crossAxisSpacing: 1.0,
+                        staggeredTiles: snapshot.data.docs.map(
+                          (doc) {
+                            return StaggeredTile.count(
+                              doc.data()["x"],
+                              doc.data()["y"],
+                            );
+                          },
+                        ).toList(),
+                        children: snapshot.data.docs.map((doc) {
+                          return FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: doc.data()["image"],
+                            fit: BoxFit.cover,
+                          );
+                        }).toList(),
                       );
-                    }).toList(),
-                  );
               },
             ),
           ],

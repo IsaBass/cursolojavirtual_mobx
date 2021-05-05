@@ -12,12 +12,11 @@ part 'carrinho_mobx.g.dart';
 class CarrinhoMobx = _CarrinhoMobxBase with _$CarrinhoMobx;
 
 abstract class _CarrinhoMobxBase with Store {
-  UserMobx user;
+  final UserMobx user;
 
-  CarrinhoRepository repository;
+  final CarrinhoRepository repository;
 
-  _CarrinhoMobxBase(this.user) {
-    repository = CarrinhoRepository(user);
+  _CarrinhoMobxBase(this.user) : repository = CarrinhoRepository(user) {
     somatorios();
   } // << construtor
 
@@ -81,15 +80,6 @@ abstract class _CarrinhoMobxBase with Store {
     products.add(cartProduct);
 
     cartProduct.cid = await repository.addCartItem(cartProduct.toMap());
-
-    // await firestoreInstance
-    //     .collection("users")
-    //     .document(user.firebaseUser.uid)
-    //     .collection("cart")
-    //     .add(cartProduct.toMap())
-    //     .then((doc) {
-    //   cartProduct.cid = doc.id;
-    // });
 
     somatorios();
     isLoading = false;

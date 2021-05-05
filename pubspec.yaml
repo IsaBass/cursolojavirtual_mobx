@@ -14,37 +14,41 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.9.0 <3.0.0"
 
 dependencies:
-  mobx_codegen: ^1.0.2
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.3
-  flutter_staggered_grid_view: ^0.3.0
-  cloud_firestore_all: ^0.1.1+4
+  
+  
   carousel_pro: ^1.0.0
-  transparent_image: ^1.0.0
-  scoped_model: ^1.0.1
-  firebase_auth: ^0.15.4
-  url_launcher: ^5.4.1
-  font_awesome_flutter: ^8.5.0
-  firebase_analytics: ^5.0.11
-  firebase_messaging: ^6.0.9
-  path_provider: ^1.6.1
-  mobx: ^1.0.2
-  flutter_mobx: ^1.0.1
-  get_it: ^4.0.0
-  firebase_auth_platform_interface: ^1.1.5
+  # scoped_model: ^1.0.1
+  # url_launcher: ^5.4.1
+  # path_provider: ^1.6.1
+  # mobx: ^1.0.2
+  
+  # firebase_auth_platform_interface: ^1.1.5
+
+  # null-safety
+  cupertino_icons: ^1.0.3
+  flutter_staggered_grid_view: ^0.4.0
+  transparent_image: ^2.0.0
+  font_awesome_flutter: ^9.0.0
+  firebase_analytics: ^8.0.3
+  firebase_messaging: ^9.1.3
+  get_it: ^7.1.0
+  flutter_mobx: ^2.0.0
+  mobx: ^2.0.0
+  cloud_firestore: ^2.0.0
+  firebase_auth: ^1.1.3
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.7.3
-  mobx_codegen: ^1.0.2
+  build_runner: ^2.0.2
+  mobx_codegen: ^2.0.0
+  slidy: ^3.2.1+1
+  
 
 
 # For information on the generic Dart part of this file, see the
@@ -88,3 +92,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+scripts:
+  mbxb: flutter packages pub run build_runner build
+  mbxw: flutter packages pub run build_runner watch
+  mbxwd: flutter packages pub run build_runner watch --delete-conflicting-outputs
+
+# executables:
+#   slidy: slidy
