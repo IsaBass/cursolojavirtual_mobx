@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     GetIt.instance.reset();
     GetIt.I.registerSingleton<UserMobx>(new UserMobx());
+
     GetIt.I
         .registerSingleton<CarrinhoMobx>(new CarrinhoMobx(GetIt.I<UserMobx>()));
 
