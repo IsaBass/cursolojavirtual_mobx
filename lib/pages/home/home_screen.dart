@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
             actions: <Widget>[Cestinha()],
           ),
           drawer: CustomDrawer(),
-          body: ProductsTab(),
+          body: CategoriesTab(),
         ),
         buildScaffold('pagina 3', Colors.redAccent),
         buildScaffold('pagina 4', Colors.yellow),

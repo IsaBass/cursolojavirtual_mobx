@@ -1,12 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'category_screen.dart';
+import '../category_screen.dart';
 
 class CategoryTile extends StatelessWidget {
-  final DocumentSnapshot<Map<String, dynamic>> snapshot;
+  final Map<String, dynamic> categ;
 
-  CategoryTile(this.snapshot);
+  CategoryTile(this.categ);
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +13,13 @@ class CategoryTile extends StatelessWidget {
       leading: CircleAvatar(
         radius: 25.0,
         backgroundColor: Colors.cyanAccent,
-        backgroundImage: NetworkImage(snapshot.data()!['icon']),
+        backgroundImage: NetworkImage(categ['icon']),
       ),
-      title: Text(snapshot.data()!['title']),
+      title: Text(categ['title']),
       trailing: Icon(Icons.keyboard_arrow_right),
       onTap: () {
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => CategoryScreen(snapshot)));
+            MaterialPageRoute(builder: (context) => CategoryScreen(categ)));
       },
     );
   }

@@ -10,12 +10,11 @@ import '../userlog/login_screen.dart';
 import '../userlog/userlog_mobx.dart';
 import '../shared/cestinha_widget.dart';
 
-import 'product_data.dart';
+import 'modeldata/product_data.dart';
 
 class ProductScreen extends StatefulWidget {
   final ProductData dados;
-  final String category;
-  ProductScreen(this.dados, this.category);
+  ProductScreen(this.dados);
 
   @override
   _ProductScreenState createState() => _ProductScreenState(dados);
@@ -102,7 +101,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         ? () {
                             if (userLog.estaLogado) {
                               CartProduct cart = new CartProduct(
-                                category: widget.category,
+                                category: dados.category,
                                 cid: '',
                                 pid: dados.id,
                                 productData: dados,
@@ -156,7 +155,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
   Widget carrosselImagens(Color corPrimaria) {
     return AspectRatio(
-      aspectRatio: 0.9,
+      aspectRatio: 1,
       child: CarouselSlider(
         items: dados.images.map((url) {
           return Container(
@@ -164,12 +163,17 @@ class _ProductScreenState extends State<ProductScreen> {
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
               image: DecorationImage(
                 image: NetworkImage(url),
+                fit: BoxFit.cover,
                 // fit: widget.boxFit,
               ),
             ),
           );
         }).toList(),
-        options: CarouselOptions(),
+        options: CarouselOptions(
+          aspectRatio: 9 / 16,
+          autoPlay: true,
+          autoPlayCurve: Curves.easeInOutBack,
+        ),
         // dotSize: 6.0,
         // dotSpacing: 20.0,
         // dotBgColor: Colors.transparent,

@@ -1,5 +1,5 @@
 import 'package:cursolojavirtual/pages/carrinho/carrrinho_repository.dart';
-import 'package:cursolojavirtual/pages/produtos/product_data.dart';
+import 'package:cursolojavirtual/pages/produtos/modeldata/product_data.dart';
 import 'package:cursolojavirtual/pages/userlog/userlog_mobx.dart';
 
 import 'package:mobx/mobx.dart';
@@ -125,13 +125,11 @@ abstract class _CarrinhoMobxBase with Store {
     for (var doc in qdocs.docs) {
       CartProduct cc = CartProduct.fromDocument(doc);
 
-      await repository.getProductDados(cc.category, cc.pid).then((prod) {
-        cc.productData = ProductData.fromDocument(prod);
-        cc.productData.category = cc.category;
-        print('entrou no products.add');
-        print('cc = ' + cc.toString());
-        products.add(cc);
-      });
+      var prod = await repository.getProductDados(cc.category, cc.pid);
+      cc.productData = ProductData.fromMap(prod);
+      print('entrou no products.add');
+      print('cc = ' + cc.toString());
+      products.add(cc);
     }
 
     print('chamou somatorios do LoadCurrent Carrinho');

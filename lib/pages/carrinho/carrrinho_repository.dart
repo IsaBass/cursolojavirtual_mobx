@@ -94,15 +94,19 @@ class CarrinhoRepository {
         .get();
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getProductDados(
+  Future<Map<String, dynamic>> getProductDados(
       String category, String productId) async {
-    return await FirebaseFirestore.instance
+    var resp = await FirebaseFirestore.instance
         .collection('products')
         .doc(category)
         .collection('items')
         .doc(productId)
         .get();
-    //   .then((s) {
-    // p.productData = ProductData.fromDocument(s);
+    if (resp.data() != null)
+      return resp.data()!
+        ..['id'] = resp.id
+        ..['category'] = category;
+    else
+      return {};
   }
 }
