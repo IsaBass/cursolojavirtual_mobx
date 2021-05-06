@@ -86,9 +86,12 @@ Widget ninguemLogado(BuildContext context) {
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 16.0),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
-          textColor: Colors.white,
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+              textStyle: TextStyle(
+                color: Colors.white,
+              )),
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => LoginScreen()));
@@ -119,9 +122,13 @@ Widget semProdutos(BuildContext context) {
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 16.0),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
-          textColor: Colors.white,
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Theme.of(context).primaryColor,
+            textStyle: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           onPressed: () {
             // Navigator.of(context)
             //     .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeTab())

@@ -113,13 +113,17 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 10.0),
             SizedBox(
               height: 48.0,
-              child: RaisedButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).primaryColor,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 child: Text(
                   'Entrar',
                   style: TextStyle(fontSize: 18.0),
                 ),
-                textColor: Colors.white,
-                color: Theme.of(context).primaryColor,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     userLog.signIn(

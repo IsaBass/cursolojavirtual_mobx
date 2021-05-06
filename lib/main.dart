@@ -1,3 +1,4 @@
+import 'package:cursolojavirtual/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +13,7 @@ void main() async {
   await Firebase.initializeApp();
   //
   await GetIt.instance.reset();
+  GetIt.I.registerSingleton<HomeController>(new HomeController());
   GetIt.I.registerSingleton<UserMobx>(new UserMobx());
   GetIt.I
       .registerSingleton<CarrinhoMobx>(new CarrinhoMobx(GetIt.I<UserMobx>()));

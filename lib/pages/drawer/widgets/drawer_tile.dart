@@ -1,27 +1,20 @@
+import 'package:cursolojavirtual/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class DrawerTile extends StatelessWidget {
   final IconData icon;
   final String text;
-  final PageController controller;
   final int page;
 
-  DrawerTile(this.icon, this.text, this.controller, this.page);
+  DrawerTile(this.icon, this.text, this.page);
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).pop();
-          //controller.jumpToPage(page);
-          controller.animateToPage(
-            page,
-            curve: Curves.easeInOut,
-            duration: Duration(seconds: 1),
-          );
-        },
+        onTap: () => _onTap2(context),
         child: Container(
           height: 60.0,
           child: Row(
@@ -29,7 +22,8 @@ class DrawerTile extends StatelessWidget {
               Icon(
                 icon,
                 size: 32.0,
-                color: controller.page?.round() == page
+                color: GetIt.I<HomeController>().pageControler.page?.round() ==
+                        page
                     ? Colors.black
                     : Colors.grey[700],
               ),
@@ -43,5 +37,15 @@ class DrawerTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _onTap2(BuildContext context) {
+    Navigator.of(context).pop();
+
+    GetIt.I<HomeController>().pageControler.animateToPage(
+          page,
+          curve: Curves.easeInOut,
+          duration: Duration(seconds: 1),
+        );
   }
 }

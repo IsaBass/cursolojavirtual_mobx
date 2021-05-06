@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cursolojavirtual/pages/userlog/userlog_mobx.dart';
-
+import 'package:cursolojavirtual/pages/home/home_controller.dart';
 import '../shared/cestinha_widget.dart';
 import '../carrinho/carrinho_mobx.dart';
 
@@ -11,8 +9,9 @@ import 'package:get_it/get_it.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class HomeTab extends StatelessWidget {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final CarrinhoMobx carrinho = GetIt.I<CarrinhoMobx>();
+  final HomeController _homeController = GetIt.I<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +35,9 @@ class HomeTab extends StatelessWidget {
         CustomScrollView(
           slivers: <Widget>[
             _SliverAppbar(carrinho: carrinho),
-            FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              future: firestore.collection("home").orderBy("pos").get(),
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: _homeController.getPosicoesImages(),
+              //firestore.collection("home").orderBy("pos").get(),
               builder: (context, snapshot) {
                 return (!snapshot.hasData)
                     ? SliverToBoxAdapter(
@@ -54,18 +54,18 @@ class HomeTab extends StatelessWidget {
                         crossAxisCount: 2,
                         mainAxisSpacing: 1.0,
                         crossAxisSpacing: 1.0,
-                        staggeredTiles: snapshot.data!.docs.map(
+                        staggeredTiles: snapshot.data!.map(
                           (doc) {
                             return StaggeredTile.count(
-                              doc.data()["x"],
-                              doc.data()["y"]!.toDouble(),
+                              doc["x"] ?? 1,
+                              doc["y"]!.toDouble(),
                             );
                           },
                         ).toList(),
-                        children: snapshot.data!.docs.map((doc) {
+                        children: snapshot.data!.map((doc) {
                           return FadeInImage.memoryNetwork(
                             placeholder: kTransparentImage,
-                            image: doc.data()["image"],
+                            image: doc["image"],
                             fit: BoxFit.cover,
                           );
                         }).toList(),
@@ -78,25 +78,6 @@ class HomeTab extends StatelessWidget {
     );
   }
 }
-
-// class _CircProgress extends StatelessWidget {
-//   const _CircProgress({
-//     Key key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: Container(
-//         height: 100.0,
-//         alignment: Alignment.center,
-//         child: CircularProgressIndicator(
-//           valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class _SliverAppbar extends StatelessWidget {
   final CarrinhoMobx carrinho;

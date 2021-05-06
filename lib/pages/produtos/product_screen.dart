@@ -91,7 +91,13 @@ class _ProductScreenState extends State<ProductScreen> {
                 SizedBox(height: 16.0),
                 SizedBox(
                   height: 44.0,
-                  child: RaisedButton(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: corPrimaria,
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     onPressed: size != null
                         ? () {
                             if (userLog.estaLogado) {
@@ -129,8 +135,6 @@ class _ProductScreenState extends State<ProductScreen> {
                             ? 'Adicionar ao carrinho'
                             : "Entre para Comprar",
                         style: TextStyle(fontSize: 18.0)),
-                    color: corPrimaria,
-                    textColor: Colors.white,
                   ),
                 ),
                 SizedBox(height: 16.0),
