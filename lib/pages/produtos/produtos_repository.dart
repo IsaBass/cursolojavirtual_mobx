@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'modeldata/product_data.dart';
+
 class ProdutosRepository {
   //
   Future<List<Map<String, dynamic>>> getCategories() async {
@@ -9,7 +11,7 @@ class ProdutosRepository {
   }
 
   //
-  Future<List<Map<String, dynamic>>> getProdutosCateg(String idCateg) async {
+  Future<List<ProductData>> getProdutosCateg(String idCateg) async {
     //
     var resp = await FirebaseFirestore.instance
         .collection('products')
@@ -19,9 +21,11 @@ class ProdutosRepository {
     //
     return resp.docs
         .map(
-          (e) => e.data()
-            ..['id'] = e.id
-            ..['category'] = idCateg,
+          (e) => ProductData.fromMap(
+            e.data()
+              ..['id'] = e.id
+              ..['category'] = idCateg,
+          ),
         )
         .toList();
   }

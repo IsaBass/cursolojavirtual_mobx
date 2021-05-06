@@ -29,7 +29,7 @@ class CategoryScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: FutureBuilder<List<Map<String, dynamic>>>(
+        body: FutureBuilder<List<ProductData>>(
           future: _repository.getProdutosCateg(categ['id']),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
@@ -50,7 +50,7 @@ class CategoryScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return ProductTile(
                         tipo: "grid",
-                        dados: ProductData.fromMap(snapshot.data![index]),
+                        dados: snapshot.data![index],
                       );
                     },
                   ),
@@ -58,12 +58,9 @@ class CategoryScreen extends StatelessWidget {
                     padding: EdgeInsets.all(4.0),
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      ProductData prod =
-                          ProductData.fromMap((snapshot.data!)[index]);
-
                       return ProductTile(
                         tipo: 'list',
-                        dados: prod,
+                        dados: snapshot.data![index],
                       );
                     },
                   ),
