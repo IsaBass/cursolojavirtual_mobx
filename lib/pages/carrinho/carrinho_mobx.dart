@@ -1,9 +1,8 @@
-import 'package:cursolojavirtual/pages/carrinho/carrrinho_repository.dart';
 import 'package:cursolojavirtual/pages/produtos/modeldata/product_data.dart';
 import 'package:cursolojavirtual/pages/userlog/userlog_mobx.dart';
-
 import 'package:mobx/mobx.dart';
 
+import 'carrrinho_repository.dart';
 import 'cart_product.dart';
 
 part 'carrinho_mobx.g.dart';
@@ -196,6 +195,9 @@ abstract class _CarrinhoMobxBase with Store {
 
     return idPedido; //refOrder.id;
   }
+
+  Future<Map<String, dynamic>> getCupom(String cupom) async =>
+      await repository.getCupom(cupom);
 
   // @action
   // Future<Null> atribuiProductData(CartProduct cartProduct, ProductData prodData) async {

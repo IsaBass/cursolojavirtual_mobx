@@ -1,37 +1,34 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cursolojavirtual/pages/carrinho/carrinho_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class CardDesconto extends StatelessWidget {
+  final CarrinhoMobx _carrinho = GetIt.I<CarrinhoMobx>();
   @override
   Widget build(BuildContext context) {
     ////
-    void validaCupom(String cupom) {
+    Future<void> validaCupom(String cupom) async {
       print('entrou na validação de desconto');
-      // DocumentSnapshot doc =
-      FirebaseFirestore.instance
-          .collection('cupom')
-          .doc(cupom)
-          .get()
-          .then((doc) {
-        if (doc.data() == null) {
-          ///
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Cupom Inválido"), backgroundColor: Colors.red));
 
-          GetIt.I<CarrinhoMobx>().atribuirDesconto(0, null);
+      var resp = await _carrinho.getCupom(cupom);
+      int? perc = resp['percent'];
+      if (perc == null) {
+        ///
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text("Cupom Inválido"), backgroundColor: Colors.red),
+        );
 
-          ///
-        } else {
-          int perc = doc.data()!['percent'];
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Desconto de $perc% aplicado"),
-              backgroundColor: Colors.green));
+        GetIt.I<CarrinhoMobx>().atribuirDesconto(0, null);
 
-          GetIt.I<CarrinhoMobx>().atribuirDesconto(perc, cupom);
-        }
-      });
+        ///
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Desconto de $perc% aplicado"),
+            backgroundColor: Colors.green));
+
+        GetIt.I<CarrinhoMobx>().atribuirDesconto(perc, cupom);
+      }
     }
 
     return Card(
@@ -49,9 +46,9 @@ class CardDesconto extends StatelessWidget {
                 hintText: "Digite seu cupom",
               ),
               initialValue: GetIt.I<CarrinhoMobx>().cupomDesconto,
-              onFieldSubmitted: (value) {
+              onFieldSubmitted: (value) async {
                 if (value.isNotEmpty) {
-                  validaCupom(value);
+                  await validaCupom(value);
                 }
               },
               // validator: (value) {

@@ -109,4 +109,16 @@ class CarrinhoRepository {
     else
       return {};
   }
+
+  Future<Map<String, dynamic>> getCupom(String cupom) async {
+    //
+    var resp =
+        await FirebaseFirestore.instance.collection('cupom').doc(cupom).get();
+    //
+
+    if (resp.data() != null) {
+      return resp.data()!;
+    }
+    return {"percent": null};
+  }
 }

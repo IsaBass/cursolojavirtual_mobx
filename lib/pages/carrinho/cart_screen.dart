@@ -1,13 +1,13 @@
-import 'package:cursolojavirtual/pages/carrinho/card_desconto.dart';
 import '../userlog/login_screen.dart';
 import '../userlog/userlog_mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'card_frete.dart';
-import 'card_somatorios.dart';
+import 'widgets/card_desconto.dart';
+import 'widgets/card_frete.dart';
+import 'widgets/card_somatorios.dart';
 import 'carrinho_mobx.dart';
-import 'cart_tile.dart';
+import 'widgets/cart_tile.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -58,11 +58,13 @@ Widget listaProdutos(BuildContext context, CarrinhoMobx meuCarrinho) {
       CardFrete(),
       SizedBox(height: 10.0),
       CardDesconto(),
-      CardSomatorios(() async {
-        String orderId = await meuCarrinho.finishOrder();
-        print('OrderId = $orderId');
-        // chamar outra tela de mostrar num do pedido
-      }),
+      CardSomatorios(
+        () async {
+          String orderId = await meuCarrinho.finishOrder();
+          print('OrderId = $orderId');
+          // chamar outra tela de mostrar num do pedido
+        },
+      ),
     ],
   );
 }
