@@ -1,3 +1,5 @@
+import 'package:cursolojavirtual/pages/carrinho/endorder_screen.dart';
+
 import '../userlog/login_screen.dart';
 import '../userlog/userlog_mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -63,6 +65,13 @@ Widget listaProdutos(BuildContext context, CarrinhoMobx meuCarrinho) {
           String orderId = await meuCarrinho.finishOrder();
           print('OrderId = $orderId');
           // chamar outra tela de mostrar num do pedido
+          if (orderId != '') {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => EndOrderScreen(orderId: orderId),
+              ),
+            );
+          }
         },
       ),
     ],

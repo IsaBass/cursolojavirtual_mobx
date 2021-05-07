@@ -182,12 +182,12 @@ abstract class _CarrinhoMobxBase with Store {
     isLoading = true;
 
     String idPedido = await repository.finalizarPedido(
-        listProdutos:
-            products.map((cartProduct) => cartProduct.toMap()).toList(),
-        frete: frete,
-        totalProds: totalProds,
-        descontoPerc: descontoPerc,
-        valorFinal: valorFinal);
+      listProdutos: products.map((cartProduct) => cartProduct.toMap()).toList(),
+      frete: valorFrete,
+      totalProds: totalProds,
+      descontoPerc: descontoPerc,
+      valorFinal: valorFinal,
+    );
 
     limpar();
 

@@ -1,4 +1,5 @@
 import 'package:cursolojavirtual/pages/home/home_controller.dart';
+import 'package:cursolojavirtual/pages/orders/orders_tab.dart';
 import 'package:get_it/get_it.dart';
 
 import '../shared/cestinha_widget.dart';
@@ -32,8 +33,16 @@ class HomeScreen extends StatelessWidget {
           drawer: CustomDrawer(),
           body: CategoriesTab(),
         ),
-        buildScaffold('pagina 3', Colors.redAccent),
-        buildScaffold('pagina 4', Colors.yellow),
+        buildScaffold('pagina 3', Colors.yellow),
+        Scaffold(
+          appBar: AppBar(
+            title: Text('Meus Pedidos'),
+            centerTitle: true,
+            actions: <Widget>[Cestinha()],
+          ),
+          drawer: CustomDrawer(),
+          body: OrdersTab(),
+        ),
       ],
     );
   }

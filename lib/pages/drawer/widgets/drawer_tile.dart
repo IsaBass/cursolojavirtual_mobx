@@ -24,7 +24,7 @@ class DrawerTile extends StatelessWidget {
                 size: 32.0,
                 color: GetIt.I<HomeController>().pageControler.page?.round() ==
                         page
-                    ? Colors.black
+                    ? Colors.blueAccent
                     : Colors.grey[700],
               ),
               SizedBox(width: 32.0),
