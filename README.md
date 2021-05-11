@@ -1,6 +1,8 @@
 # App Loja Online com Mobx e Google Firebase
 ##### App desenvolvido como requisito do curso [Criação de Apps Android e iOS com Flutter - Daniel Ciolfi](https://www.udemy.com/course/curso-completo-flutter-app-android-ios/)
 
+[Click aqui](https://cursolojavirtual-c55f4.web.app/) para acessar app em Flutter Web. (não-responsivo)
+
 <br>
 
 Aulas apresentadas com ScopedModel , porém, como desafio, implementei utilizando Mobx como gerenciador de estado e GetIt como injeção de dependência.
