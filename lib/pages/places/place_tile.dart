@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PlaceTile extends StatelessWidget {
@@ -12,9 +13,14 @@ class PlaceTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: 100,
-            child: Image.network(place['image'], fit: BoxFit.cover),
-          ),
+              height: 100,
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: place["image"],
+                fit: BoxFit.cover,
+              )
+              // Image.network(place['image'], fit: BoxFit.cover),
+              ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

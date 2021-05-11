@@ -1,16 +1,58 @@
-# cursolojavirtual
+# App Loja Online com Mobx e Google Firebase
+##### App desenvolvido como requisito do curso [Criação de Apps Android e iOS com Flutter - Daniel Ciolfi](https://www.udemy.com/course/curso-completo-flutter-app-android-ios/)
 
-A new Flutter project.
+<br>
 
-## Getting Started
+Aulas apresentadas com ScopedModel , porém, como desafio, implementei utilizando Mobx como gerenciador de estado e GetIt como injeção de dependência.
 
-This project is a starting point for a Flutter application.
+###### App 100% Null-Safety
 
-A few resources to get you started if this is your first Flutter project:
+#### App Loja On-Line:
+- Utiliza BD Firebase Firestore
+- Mobx
+- GetIt
+- Sliver
+- Carrinho
+- Cupom de desconto
+- Lista de Pedidos
+- Lista de Lojas
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#### Tecnologias utilizadas:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- firebase firestore
+- firebase_auth
+- carousel_slider
+- mobx
+- url_launcher
+
+![screen](/imgs/screen01.png)
+
+<br>
+
+💬 [Meu linkedin](https://www.linkedin.com/in/isaias-gon%C3%A7alves-igs/)
+
+<hr>
+
+##### Outros Projetos Flutter:
+###### [DevQuiz #NLW5 RocketSeat](https://github.com/IsaBass/nlw5_devquiz) (SetState, ValueNotifier, AnimationBuilder, share_plus)
+###### [Chat OnLine Firebase](https://github.com/IsaBass/chat_firebase)  (Firebase, Google SignIn, camera)
+###### [Buscador de gifs](https://github.com/IsaBass/buscador_gifs) (share, http, transparent_image)
+###### [To-Do_Offline](https://github.com/IsaBass/todo_offline) (path_provider, json)
+###### [Conversor de Moedas](https://github.com/IsaBass/conversor_moedas) (Dio, http)
+###### [Calculadora IMC](https://github.com/IsaBass/calcIMC) (SetState)
+
+
+
+
+
+<!--
+## Meus Projetos Flutter:
+#### [DevQuiz #NLW5 RocketSeat](https://github.com/IsaBass/nlw5_devquiz)
+- projeto da 5ª NLW , trilha Flutter
+- SetState, ValueNotifier, AnimationBuilder, shared_plus
+<!--
+#### [Calculadora IMC](https://github.com/IsaBass/calcIMC)
+- projeto inicial de aprendizado
+- SetState
+-->
+
