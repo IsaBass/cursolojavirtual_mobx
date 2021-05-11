@@ -1,14 +1,16 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cursolojavirtual/pages/produtos/produtos_repository.dart';
 import 'package:cursolojavirtual/pages/shared/cestinha_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'product_data.dart';
-import 'product_tile.dart';
+import 'modeldata/product_data.dart';
+import 'widgets/product_tile.dart';
 
 class CategoryScreen extends StatelessWidget {
-  final DocumentSnapshot snap;
+  final Map<String, dynamic> categ;
 
-  CategoryScreen(this.snap);
+  CategoryScreen(this.categ);
+
+  final _repository = ProdutosRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class CategoryScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(snap.data['title']),
+          title: Text(categ['title']),
           centerTitle: true,
           actions: <Widget>[Cestinha()],
           bottom: TabBar(
@@ -27,12 +29,8 @@ class CategoryScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: FutureBuilder<QuerySnapshot>(
-          future: firestoreInstance
-              .collection('products')
-              .document(snap.id) // categ  clicado = blusa, calça, etc
-              .collection('items')
-              .getDocuments(),
+        body: FutureBuilder<List<ProductData>>(
+          future: _repository.getProdutosCateg(categ['id']),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
               return Center(child: CircularProgressIndicator());
@@ -48,25 +46,21 @@ class CategoryScreen extends StatelessWidget {
                       crossAxisSpacing: 4.0,
                       childAspectRatio: 0.65,
                     ),
-                    itemCount: snapshot.data.docs.length,
+                    itemCount: snapshot.data?.length ?? 0,
                     itemBuilder: (context, index) {
                       return ProductTile(
                         tipo: "grid",
-                        category: snap.id,
-                        dados:
-                            ProductData.fromDocument(snapshot.data.docs[index]),
+                        dados: snapshot.data![index],
                       );
                     },
                   ),
                   ListView.builder(
                     padding: EdgeInsets.all(4.0),
-                    itemCount: snapshot.data.docs.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return ProductTile(
                         tipo: 'list',
-                        category: snap.id,
-                        dados:
-                            ProductData.fromDocument(snapshot.data.docs[index]),
+                        dados: snapshot.data![index],
                       );
                     },
                   ),

@@ -1,4 +1,5 @@
-import 'package:carousel_pro/carousel_pro.dart';
+// import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
@@ -9,14 +10,11 @@ import '../userlog/login_screen.dart';
 import '../userlog/userlog_mobx.dart';
 import '../shared/cestinha_widget.dart';
 
-import 'product_data.dart';
-
-
+import 'modeldata/product_data.dart';
 
 class ProductScreen extends StatefulWidget {
   final ProductData dados;
-  final String category;
-  ProductScreen(this.dados, this.category);
+  ProductScreen(this.dados);
 
   @override
   _ProductScreenState createState() => _ProductScreenState(dados);
@@ -30,7 +28,7 @@ class _ProductScreenState extends State<ProductScreen> {
   final userLog = GetIt.I<UserMobx>();
   final carrinho = GetIt.I<CarrinhoMobx>();
 
-  String size;
+  String? size;
 
   _ProductScreenState(this.dados);
 
@@ -42,7 +40,7 @@ class _ProductScreenState extends State<ProductScreen> {
       appBar: AppBar(
         title: Text(dados.title),
         centerTitle: true,
-        actions: <Widget>[ Cestinha() ],
+        actions: <Widget>[Cestinha()],
       ),
       body: ListView(
         children: <Widget>[
@@ -92,21 +90,35 @@ class _ProductScreenState extends State<ProductScreen> {
                 SizedBox(height: 16.0),
                 SizedBox(
                   height: 44.0,
-                  child: RaisedButton(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: corPrimaria,
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     onPressed: size != null
                         ? () {
                             if (userLog.estaLogado) {
-                              CartProduct cart = new CartProduct();
+                              CartProduct cart = new CartProduct(
+                                category: dados.category,
+                                cid: '',
+                                pid: dados.id,
+                                productData: dados,
+                                quantity: 1,
+                                size: size,
+                              );
 
-                              cart.quantity = 1;
-                              cart.size = size;
-                              cart.productData = dados;
-                              cart.pid = dados.id;
-                              cart.category = widget.category; 
+                              // cart.quantity = 1;
+                              // cart.size = size;
+                              // cart.productData = dados;
+                              // cart.pid = dados.id;
+                              // cart.category = widget.category;
 
                               carrinho.addCartItem(cart);
 
-                              _scaffoldKey.currentState.showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
                                 content: Text("Produto adicionado ao carrinho"),
                                 backgroundColor: Colors.green,
                                 duration: Duration(seconds: 2),
@@ -122,8 +134,6 @@ class _ProductScreenState extends State<ProductScreen> {
                             ? 'Adicionar ao carrinho'
                             : "Entre para Comprar",
                         style: TextStyle(fontSize: 18.0)),
-                    color: corPrimaria,
-                    textColor: Colors.white,
                   ),
                 ),
                 SizedBox(height: 16.0),
@@ -145,18 +155,32 @@ class _ProductScreenState extends State<ProductScreen> {
 
   Widget carrosselImagens(Color corPrimaria) {
     return AspectRatio(
-      aspectRatio: 0.9,
-      child: Carousel(
-        images: dados.images.map((url) {
-          return NetworkImage(url);
+      aspectRatio: 1,
+      child: CarouselSlider(
+        items: dados.images.map((url) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              image: DecorationImage(
+                image: NetworkImage(url),
+                fit: BoxFit.cover,
+                // fit: widget.boxFit,
+              ),
+            ),
+          );
         }).toList(),
-        dotSize: 6.0,
-        dotSpacing: 20.0,
-        dotBgColor: Colors.transparent,
-        dotColor: corPrimaria,
-        autoplay: true,
-        //autoplayDuration: Duration(seconds: 5),
-        animationDuration: Duration(milliseconds: 500),
+        options: CarouselOptions(
+          aspectRatio: 9 / 16,
+          autoPlay: true,
+          autoPlayCurve: Curves.easeInOutBack,
+        ),
+        // dotSize: 6.0,
+        // dotSpacing: 20.0,
+        // dotBgColor: Colors.transparent,
+        // dotColor: corPrimaria,
+        // autoplay: true,
+        // //autoplayDuration: Duration(seconds: 5),
+        // animationDuration: Duration(milliseconds: 500), items: [], options: null,
       ),
     );
   }
@@ -165,7 +189,7 @@ class _ProductScreenState extends State<ProductScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(4.0)),
           border: Border.all(
-            color: s == size ? corPrimaria : Colors.grey[500],
+            color: s == size ? corPrimaria : Colors.grey[500]!,
             width: 3.0,
           ),
         ),

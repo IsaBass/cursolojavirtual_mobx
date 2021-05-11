@@ -6,74 +6,71 @@ part of 'userlog_mobx.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UserMobx on UserMobxBase, Store {
-  Computed<bool> _$estaLogadoComputed;
+  Computed<bool>? _$estaLogadoComputed;
 
   @override
   bool get estaLogado =>
-      (_$estaLogadoComputed ??= Computed<bool>(() => super.estaLogado)).value;
+      (_$estaLogadoComputed ??= Computed<bool>(() => super.estaLogado,
+              name: 'UserMobxBase.estaLogado'))
+          .value;
 
   final _$firebaseUserAtom = Atom(name: 'UserMobxBase.firebaseUser');
 
   @override
-  FirebaseUser get firebaseUser {
-    _$firebaseUserAtom.context.enforceReadPolicy(_$firebaseUserAtom);
-    _$firebaseUserAtom.reportObserved();
+  User? get firebaseUser {
+    _$firebaseUserAtom.reportRead();
     return super.firebaseUser;
   }
 
   @override
-  set firebaseUser(FirebaseUser value) {
-    _$firebaseUserAtom.context.conditionallyRunInAction(() {
+  set firebaseUser(User? value) {
+    _$firebaseUserAtom.reportWrite(value, super.firebaseUser, () {
       super.firebaseUser = value;
-      _$firebaseUserAtom.reportChanged();
-    }, _$firebaseUserAtom, name: '${_$firebaseUserAtom.name}_set');
+    });
   }
 
   final _$userDataAtom = Atom(name: 'UserMobxBase.userData');
 
   @override
   Map<String, dynamic> get userData {
-    _$userDataAtom.context.enforceReadPolicy(_$userDataAtom);
-    _$userDataAtom.reportObserved();
+    _$userDataAtom.reportRead();
     return super.userData;
   }
 
   @override
   set userData(Map<String, dynamic> value) {
-    _$userDataAtom.context.conditionallyRunInAction(() {
+    _$userDataAtom.reportWrite(value, super.userData, () {
       super.userData = value;
-      _$userDataAtom.reportChanged();
-    }, _$userDataAtom, name: '${_$userDataAtom.name}_set');
+    });
   }
 
   final _$isLoadingAtom = Atom(name: 'UserMobxBase.isLoading');
 
   @override
   bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
+    _$isLoadingAtom.reportRead();
     return super.isLoading;
   }
 
   @override
   set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
       super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+    });
   }
 
-  final _$signOutAsyncAction = AsyncAction('signOut');
+  final _$signOutAsyncAction = AsyncAction('UserMobxBase.signOut');
 
   @override
   Future<void> signOut() {
     return _$signOutAsyncAction.run(() => super.signOut());
   }
 
-  final _$loadCurrentUserAsyncAction = AsyncAction('loadCurrentUser');
+  final _$loadCurrentUserAsyncAction =
+      AsyncAction('UserMobxBase.loadCurrentUser');
 
   @override
   Future<Null> loadCurrentUser() {
@@ -84,11 +81,12 @@ mixin _$UserMobx on UserMobxBase, Store {
 
   @override
   void signUp(
-      {@required Map<String, dynamic> userData,
-      @required String pass,
-      @required VoidCallback onSucces,
-      @required VoidCallback onFail}) {
-    final _$actionInfo = _$UserMobxBaseActionController.startAction();
+      {required Map<String, dynamic> userData,
+      required String pass,
+      required VoidCallback onSucces,
+      required VoidCallback onFail}) {
+    final _$actionInfo =
+        _$UserMobxBaseActionController.startAction(name: 'UserMobxBase.signUp');
     try {
       return super.signUp(
           userData: userData, pass: pass, onSucces: onSucces, onFail: onFail);
@@ -99,16 +97,27 @@ mixin _$UserMobx on UserMobxBase, Store {
 
   @override
   void signIn(
-      {@required String email,
-      @required String pass,
-      @required VoidCallback onSucces,
-      @required VoidCallback onFail}) {
-    final _$actionInfo = _$UserMobxBaseActionController.startAction();
+      {required String email,
+      required String pass,
+      required VoidCallback onSucces,
+      required VoidCallback onFail}) {
+    final _$actionInfo =
+        _$UserMobxBaseActionController.startAction(name: 'UserMobxBase.signIn');
     try {
       return super
           .signIn(email: email, pass: pass, onSucces: onSucces, onFail: onFail);
     } finally {
       _$UserMobxBaseActionController.endAction(_$actionInfo);
     }
+  }
+
+  @override
+  String toString() {
+    return '''
+firebaseUser: ${firebaseUser},
+userData: ${userData},
+isLoading: ${isLoading},
+estaLogado: ${estaLogado}
+    ''';
   }
 }

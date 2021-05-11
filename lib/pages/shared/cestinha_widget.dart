@@ -9,27 +9,28 @@ class Cestinha extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: InkWell(
-      child: Row(
-        children: <Widget>[
-          Icon(Icons.shopping_cart),
-          Observer(
-            builder: (context) {
-              return Text(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.shopping_cart),
+            Observer(
+              builder: (context) => Text(
                 '${GetIt.I<CarrinhoMobx>().quantItens} (${GetIt.I<CarrinhoMobx>().quantProds}) ',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              );
-            }
-          ),
-        ],
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+        onTap: () {
+          GetIt.I<CarrinhoMobx>().somatorios();
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => CartScreen()));
+        },
       ),
-      onTap: () {
-        GetIt.I<CarrinhoMobx>().somatorios();
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => CartScreen()));
-      },
-    ),
-  );
+    );
   }
 }

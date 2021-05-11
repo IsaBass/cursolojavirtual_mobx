@@ -1,13 +1,15 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
+import 'package:cursolojavirtual/pages/produtos/produtos_repository.dart';
 import 'package:flutter/material.dart';
 
-import 'category_tile.dart';
+import 'widgets/category_tile.dart';
 
-class ProductsTab extends StatelessWidget {
+class CategoriesTab extends StatelessWidget {
+  final _repository = ProdutosRepository();
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-        future: firestoreInstance.collection("products").getDocuments(),
+    return FutureBuilder<List<Map<String, dynamic>>>(
+        future: _repository.getCategories(),
         builder: (context, snapshot) {
           // switch (snapshot.connectionState) {
           //   case ConnectionState.waiting:
@@ -20,8 +22,7 @@ class ProductsTab extends StatelessWidget {
           //     else {
           return esperandoCarregamento(snapshot, () {
             var dividedTiles = ListTile.divideTiles(
-              tiles:
-                  snapshot.data.docs.map((docc) => CategoryTile(docc)).toList(),
+              tiles: snapshot.data!.map((docc) => CategoryTile(docc)).toList(),
               color: Colors.grey[500],
             ).toList();
 
@@ -40,7 +41,7 @@ Widget ciculinhoCarregando() {
   );
 }
 
-Widget esperandoCarregamento(AsyncSnapshot<QuerySnapshot> snapshot, Function f) {
+Widget esperandoCarregamento(AsyncSnapshot snapshot, Function f) {
   switch (snapshot.connectionState) {
     case ConnectionState.waiting:
     case ConnectionState.none:

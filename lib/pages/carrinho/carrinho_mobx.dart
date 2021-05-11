@@ -1,10 +1,8 @@
-import 'package:cloud_firestore_all/cloud_firestore_all.dart';
-import 'package:cursolojavirtual/pages/carrinho/carrrinho_repository.dart';
-import 'package:cursolojavirtual/pages/produtos/product_data.dart';
+import 'package:cursolojavirtual/pages/produtos/modeldata/product_data.dart';
 import 'package:cursolojavirtual/pages/userlog/userlog_mobx.dart';
-
 import 'package:mobx/mobx.dart';
 
+import 'carrrinho_repository.dart';
 import 'cart_product.dart';
 
 part 'carrinho_mobx.g.dart';
@@ -12,12 +10,11 @@ part 'carrinho_mobx.g.dart';
 class CarrinhoMobx = _CarrinhoMobxBase with _$CarrinhoMobx;
 
 abstract class _CarrinhoMobxBase with Store {
-  UserMobx user;
+  final UserMobx user;
 
-  CarrinhoRepository repository;
+  final CarrinhoRepository repository;
 
-  _CarrinhoMobxBase(this.user) {
-    repository = CarrinhoRepository(user);
+  _CarrinhoMobxBase(this.user) : repository = CarrinhoRepository(user) {
     somatorios();
   } // << construtor
 
@@ -27,7 +24,7 @@ abstract class _CarrinhoMobxBase with Store {
   @observable
   int descontoPerc = 0;
 
-  String cupomDesconto;
+  String cupomDesconto = '';
 
   @observable
   ObservableList<CartProduct> products = ObservableList.of([]);
@@ -45,10 +42,10 @@ abstract class _CarrinhoMobxBase with Store {
   double get valorDesc => totalProds * descontoPerc / 100;
 
   @observable
-  double totalProds;
+  double totalProds = 0.00;
 
   @observable
-  int quantProds;
+  int quantProds = 0;
 
   @computed
   double get valorFinal => totalProds + valorFrete - valorDesc;
@@ -65,8 +62,8 @@ abstract class _CarrinhoMobxBase with Store {
     totalProds = 0;
     quantProds = 0;
     products.forEach((p) {
-      if (p.productData != null)
-        totalProds = totalProds + (p.quantity * p.productData.price);
+      // if (p.productData != null)
+      totalProds = totalProds + (p.quantity * p.productData.price);
 
       quantProds = quantProds + p.quantity;
     });
@@ -82,15 +79,6 @@ abstract class _CarrinhoMobxBase with Store {
 
     cartProduct.cid = await repository.addCartItem(cartProduct.toMap());
 
-    // await firestoreInstance
-    //     .collection("users")
-    //     .document(user.firebaseUser.uid)
-    //     .collection("cart")
-    //     .add(cartProduct.toMap())
-    //     .then((doc) {
-    //   cartProduct.cid = doc.id;
-    // });
-
     somatorios();
     isLoading = false;
   }
@@ -102,12 +90,12 @@ abstract class _CarrinhoMobxBase with Store {
     descontoPerc = 0;
     totalProds = 0.00;
     quantProds = 0;
-    cupomDesconto = null;
+    cupomDesconto = '';
   }
 
   @action
-  void atribuirDesconto(int descPerc, String cupom) {
-    cupomDesconto = cupom;
+  void atribuirDesconto(int descPerc, String? cupom) {
+    cupomDesconto = cupom ?? '';
     descontoPerc = descPerc;
   }
 
@@ -115,13 +103,8 @@ abstract class _CarrinhoMobxBase with Store {
   Future<Null> removeCartItem(CartProduct cartProduct) async {
     isLoading = true;
 
+    //
     repository.deleteCartItem(cartProduct.cid);
-    // await firestoreInstance
-    //     .collection("users")
-    //     .document(user.firebaseUser.uid)
-    //     .collection("cart")
-    //     .document(cartProduct.cid)
-    //     .delete();
 
     products.remove(cartProduct);
     somatorios();
@@ -131,49 +114,22 @@ abstract class _CarrinhoMobxBase with Store {
   @action
   Future<Null> loadCurrentCart(UserMobx user) async {
     isLoading = true;
-    if (user != null) {
-      print('entrou na funcao load carrinho');
 
-      // CollectionReference ref1 = firestoreInstance
-      //     .collection("users")
-      //     .document(user.firebaseUser.uid)
-      //     .collection("cart");
+    print('entrou na funcao load carrinho');
 
-      // CollectionReference ref2 = firestoreInstance.collection('products');
+    var qdocs = await repository.getCarrinho();
 
-      // await ref1.getDocuments().then((qdocs) {
-      //   products.addAll(qdocs.docs.map((doc) => CartProduct.fromDocument(doc)));
+    print(qdocs.docs.toString());
 
-      //   products.forEach((p) async {
-      //     await ref2
-      //         .document(p.category)
-      //         .collection('items')
-      //         .document(p.pid)
-      //         .get()
-      //         .then((s) {
-      //       p.productData = ProductData.fromDocument(s);
-      //       print('chamou somatorios do LoadCurrent Carrinho');
-      //       somatorios();
-      //     });
-      //   });
-      // });
+    for (var doc in qdocs.docs) {
+      CartProduct cc = CartProduct.fromDocument(doc);
 
-      QuerySnapshot qdocs = await repository.getCarrinho();
-
-      print(qdocs.docs.toString());
-
-      for (DocumentSnapshot doc in qdocs.docs) {
-        CartProduct cc = CartProduct.fromDocument(doc);
-
-        await repository.getProductDados(cc.category, cc.pid).then((prod) {
-          cc.productData = ProductData.fromDocument(prod);
-          print('entrou no products.add');
-          print('cc = ' + cc.toString());
-          products.add(cc);
-        });
-      }
+      var prod = await repository.getProductDados(cc.category, cc.pid);
+      cc.productData = ProductData.fromMap(prod);
+      print('entrou no products.add');
+      print('cc = ' + cc.toString());
+      products.add(cc);
     }
-    ;
 
     print('chamou somatorios do LoadCurrent Carrinho');
     somatorios();
@@ -222,16 +178,16 @@ abstract class _CarrinhoMobxBase with Store {
 
   @action
   Future<String> finishOrder() async {
-    if (products.length == 0) return null;
+    if (products.length == 0) return '';
     isLoading = true;
 
     String idPedido = await repository.finalizarPedido(
-        listProdutos:
-            products.map((cartProduct) => cartProduct.toMap()).toList(),
-        frete: frete,
-        totalProds: totalProds,
-        descontoPerc: descontoPerc,
-        valorFinal: valorFinal);
+      listProdutos: products.map((cartProduct) => cartProduct.toMap()).toList(),
+      frete: valorFrete,
+      totalProds: totalProds,
+      descontoPerc: descontoPerc,
+      valorFinal: valorFinal,
+    );
 
     limpar();
 
@@ -239,6 +195,9 @@ abstract class _CarrinhoMobxBase with Store {
 
     return idPedido; //refOrder.id;
   }
+
+  Future<Map<String, dynamic>> getCupom(String cupom) async =>
+      await repository.getCupom(cupom);
 
   // @action
   // Future<Null> atribuiProductData(CartProduct cartProduct, ProductData prodData) async {

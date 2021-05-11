@@ -7,10 +7,11 @@ class CardSomatorios extends StatelessWidget {
   final VoidCallback buy;
 
   CardSomatorios(this.buy);
+  //
+  final CarrinhoMobx carrinho = GetIt.I<CarrinhoMobx>();
 
   @override
   Widget build(BuildContext context) {
-    CarrinhoMobx carrinho = GetIt.I<CarrinhoMobx>();
     return Observer(builder: (context) {
       return Card(
         margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
@@ -62,10 +63,12 @@ class CardSomatorios extends StatelessWidget {
                             color: Theme.of(context).primaryColor))
                   ]),
               SizedBox(height: 12.0),
-              RaisedButton(
+              ElevatedButton(
                 child: Text('Finalizar Pedido'),
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).primaryColor,
+                  textStyle: TextStyle(color: Colors.white),
+                ),
                 onPressed: buy,
               ),
             ],

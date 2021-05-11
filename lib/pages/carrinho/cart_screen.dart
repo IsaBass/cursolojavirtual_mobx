@@ -1,31 +1,26 @@
-import 'dart:async';
-
-import 'package:cursolojavirtual/pages/carrinho/card_desconto.dart';
-import 'package:mobx/mobx.dart';
+import 'package:cursolojavirtual/pages/carrinho/endorder_screen.dart';
 
 import '../userlog/login_screen.dart';
 import '../userlog/userlog_mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter/material.dart';
-import 'card_frete.dart';
-import 'card_somatorios.dart';
+import 'widgets/card_desconto.dart';
+import 'widgets/card_frete.dart';
+import 'widgets/card_somatorios.dart';
 import 'carrinho_mobx.dart';
-import 'cart_tile.dart';
+import 'widgets/cart_tile.dart';
 
 class CartScreen extends StatefulWidget {
-
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  
   CarrinhoMobx meuCarrinho = GetIt.I<CarrinhoMobx>();
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: Text("Meu carrinho"),
@@ -35,7 +30,7 @@ class _CartScreenState extends State<CartScreen> {
             padding: EdgeInsets.only(right: 8.0),
             child: Observer(
               builder: (context) => Text(
-                  '${meuCarrinho.quantItens ?? 0} ${meuCarrinho.quantItens == 1 ? "ITEM" : "ITEMS"} '),
+                  '${meuCarrinho.quantItens} ${meuCarrinho.quantItens == 1 ? "ITEM" : "ITEMS"} '),
             ),
           ),
         ],
@@ -44,7 +39,8 @@ class _CartScreenState extends State<CartScreen> {
           ? Center(child: CircularProgressIndicator())
           : !GetIt.I<UserMobx>().estaLogado
               ? ninguemLogado(context)
-              : (meuCarrinho.products == null || meuCarrinho.quantItens == 0)
+              : (meuCarrinho.products.length == 0 ||
+                      meuCarrinho.quantItens == 0)
                   ? semProdutos(context)
                   : listaProdutos(context, meuCarrinho),
     );
@@ -56,27 +52,31 @@ Widget listaProdutos(BuildContext context, CarrinhoMobx meuCarrinho) {
     children: <Widget>[
       Observer(builder: (context) {
         return Column(
-          children: meuCarrinho.products.map((product) {
-            return CartTile(cartProduct: product);
-          }).toList(),
+          children: meuCarrinho.products
+              .map((product) => CartTile(cartProduct: product))
+              .toList(),
         );
       }),
       CardFrete(),
       SizedBox(height: 10.0),
       CardDesconto(),
-      CardSomatorios( () async {
-        String orderId = await meuCarrinho.finishOrder();
-        if(orderId != null) {
-        print('OrderId = $orderId');
-        // chamar outra tela de mostrar num do pedido 
-
-        }
-      }),
-          ],
-        );
-      }
-      
-     
+      CardSomatorios(
+        () async {
+          String orderId = await meuCarrinho.finishOrder();
+          print('OrderId = $orderId');
+          // chamar outra tela de mostrar num do pedido
+          if (orderId != '') {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => EndOrderScreen(orderId: orderId),
+              ),
+            );
+          }
+        },
+      ),
+    ],
+  );
+}
 
 Widget ninguemLogado(BuildContext context) {
   return Container(
@@ -97,9 +97,12 @@ Widget ninguemLogado(BuildContext context) {
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 16.0),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
-          textColor: Colors.white,
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+              textStyle: TextStyle(
+                color: Colors.white,
+              )),
           onPressed: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => LoginScreen()));
@@ -130,9 +133,13 @@ Widget semProdutos(BuildContext context) {
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 16.0),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
-          textColor: Colors.white,
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Theme.of(context).primaryColor,
+            textStyle: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           onPressed: () {
             // Navigator.of(context)
             //     .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomeTab())

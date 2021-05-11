@@ -1,3 +1,7 @@
+import 'package:cursolojavirtual/pages/home/home_controller.dart';
+import 'package:cursolojavirtual/pages/orders/orders_tab.dart';
+import 'package:cursolojavirtual/pages/places/places_tab.dart';
+import 'package:get_it/get_it.dart';
 
 import '../shared/cestinha_widget.dart';
 
@@ -8,20 +12,18 @@ import 'package:flutter/material.dart';
 import 'home_tab.dart';
 
 class HomeScreen extends StatelessWidget {
-  final _pageControler = PageController();
+  final _homeController = GetIt.I<HomeController>();
 
   @override
   Widget build(BuildContext context) {
-    // _pageControler.jumpToPage(page)
-
     return PageView(
-      controller: _pageControler,
+      controller: _homeController.pageControler,
       scrollDirection: Axis.vertical,
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         Scaffold(
           body: HomeTab(),
-          drawer: CustomDrawer(_pageControler),
+          drawer: CustomDrawer(),
         ),
         Scaffold(
           appBar: AppBar(
@@ -29,11 +31,27 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
             actions: <Widget>[Cestinha()],
           ),
-          drawer: CustomDrawer(_pageControler),
-          body: ProductsTab(),
+          drawer: CustomDrawer(),
+          body: CategoriesTab(),
         ),
-        buildScaffold('pagina 3', Colors.redAccent),
-        buildScaffold('pagina 4', Colors.yellow),
+        Scaffold(
+          appBar: AppBar(
+            title: Text('Nossas Lojas'),
+            centerTitle: true,
+            actions: <Widget>[Cestinha()],
+          ),
+          drawer: CustomDrawer(),
+          body: PlacesTab(),
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: Text('Meus Pedidos'),
+            centerTitle: true,
+            actions: <Widget>[Cestinha()],
+          ),
+          drawer: CustomDrawer(),
+          body: OrdersTab(),
+        ),
       ],
     );
   }
@@ -43,7 +61,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(titulo),
       ),
-      drawer: CustomDrawer(_pageControler),
+      drawer: CustomDrawer(),
       body: Container(color: cor),
     );
   }

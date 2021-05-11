@@ -6,140 +6,137 @@ part of 'carrinho_mobx.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
-  Computed<int> _$quantItensComputed;
+  Computed<int>? _$quantItensComputed;
 
   @override
   int get quantItens =>
-      (_$quantItensComputed ??= Computed<int>(() => super.quantItens)).value;
-  Computed<double> _$valorFreteComputed;
+      (_$quantItensComputed ??= Computed<int>(() => super.quantItens,
+              name: '_CarrinhoMobxBase.quantItens'))
+          .value;
+  Computed<double>? _$valorFreteComputed;
 
   @override
   double get valorFrete =>
-      (_$valorFreteComputed ??= Computed<double>(() => super.valorFrete)).value;
-  Computed<double> _$valorDescComputed;
+      (_$valorFreteComputed ??= Computed<double>(() => super.valorFrete,
+              name: '_CarrinhoMobxBase.valorFrete'))
+          .value;
+  Computed<double>? _$valorDescComputed;
 
   @override
   double get valorDesc =>
-      (_$valorDescComputed ??= Computed<double>(() => super.valorDesc)).value;
-  Computed<double> _$valorFinalComputed;
+      (_$valorDescComputed ??= Computed<double>(() => super.valorDesc,
+              name: '_CarrinhoMobxBase.valorDesc'))
+          .value;
+  Computed<double>? _$valorFinalComputed;
 
   @override
   double get valorFinal =>
-      (_$valorFinalComputed ??= Computed<double>(() => super.valorFinal)).value;
+      (_$valorFinalComputed ??= Computed<double>(() => super.valorFinal,
+              name: '_CarrinhoMobxBase.valorFinal'))
+          .value;
 
   final _$freteAtom = Atom(name: '_CarrinhoMobxBase.frete');
 
   @override
   double get frete {
-    _$freteAtom.context.enforceReadPolicy(_$freteAtom);
-    _$freteAtom.reportObserved();
+    _$freteAtom.reportRead();
     return super.frete;
   }
 
   @override
   set frete(double value) {
-    _$freteAtom.context.conditionallyRunInAction(() {
+    _$freteAtom.reportWrite(value, super.frete, () {
       super.frete = value;
-      _$freteAtom.reportChanged();
-    }, _$freteAtom, name: '${_$freteAtom.name}_set');
+    });
   }
 
   final _$descontoPercAtom = Atom(name: '_CarrinhoMobxBase.descontoPerc');
 
   @override
   int get descontoPerc {
-    _$descontoPercAtom.context.enforceReadPolicy(_$descontoPercAtom);
-    _$descontoPercAtom.reportObserved();
+    _$descontoPercAtom.reportRead();
     return super.descontoPerc;
   }
 
   @override
   set descontoPerc(int value) {
-    _$descontoPercAtom.context.conditionallyRunInAction(() {
+    _$descontoPercAtom.reportWrite(value, super.descontoPerc, () {
       super.descontoPerc = value;
-      _$descontoPercAtom.reportChanged();
-    }, _$descontoPercAtom, name: '${_$descontoPercAtom.name}_set');
+    });
   }
 
   final _$productsAtom = Atom(name: '_CarrinhoMobxBase.products');
 
   @override
   ObservableList<CartProduct> get products {
-    _$productsAtom.context.enforceReadPolicy(_$productsAtom);
-    _$productsAtom.reportObserved();
+    _$productsAtom.reportRead();
     return super.products;
   }
 
   @override
   set products(ObservableList<CartProduct> value) {
-    _$productsAtom.context.conditionallyRunInAction(() {
+    _$productsAtom.reportWrite(value, super.products, () {
       super.products = value;
-      _$productsAtom.reportChanged();
-    }, _$productsAtom, name: '${_$productsAtom.name}_set');
+    });
   }
 
   final _$isLoadingAtom = Atom(name: '_CarrinhoMobxBase.isLoading');
 
   @override
   bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
+    _$isLoadingAtom.reportRead();
     return super.isLoading;
   }
 
   @override
   set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
       super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+    });
   }
 
   final _$totalProdsAtom = Atom(name: '_CarrinhoMobxBase.totalProds');
 
   @override
   double get totalProds {
-    _$totalProdsAtom.context.enforceReadPolicy(_$totalProdsAtom);
-    _$totalProdsAtom.reportObserved();
+    _$totalProdsAtom.reportRead();
     return super.totalProds;
   }
 
   @override
   set totalProds(double value) {
-    _$totalProdsAtom.context.conditionallyRunInAction(() {
+    _$totalProdsAtom.reportWrite(value, super.totalProds, () {
       super.totalProds = value;
-      _$totalProdsAtom.reportChanged();
-    }, _$totalProdsAtom, name: '${_$totalProdsAtom.name}_set');
+    });
   }
 
   final _$quantProdsAtom = Atom(name: '_CarrinhoMobxBase.quantProds');
 
   @override
   int get quantProds {
-    _$quantProdsAtom.context.enforceReadPolicy(_$quantProdsAtom);
-    _$quantProdsAtom.reportObserved();
+    _$quantProdsAtom.reportRead();
     return super.quantProds;
   }
 
   @override
   set quantProds(int value) {
-    _$quantProdsAtom.context.conditionallyRunInAction(() {
+    _$quantProdsAtom.reportWrite(value, super.quantProds, () {
       super.quantProds = value;
-      _$quantProdsAtom.reportChanged();
-    }, _$quantProdsAtom, name: '${_$quantProdsAtom.name}_set');
+    });
   }
 
-  final _$addCartItemAsyncAction = AsyncAction('addCartItem');
+  final _$addCartItemAsyncAction = AsyncAction('_CarrinhoMobxBase.addCartItem');
 
   @override
   Future<Null> addCartItem(CartProduct cartProduct) {
     return _$addCartItemAsyncAction.run(() => super.addCartItem(cartProduct));
   }
 
-  final _$removeCartItemAsyncAction = AsyncAction('removeCartItem');
+  final _$removeCartItemAsyncAction =
+      AsyncAction('_CarrinhoMobxBase.removeCartItem');
 
   @override
   Future<Null> removeCartItem(CartProduct cartProduct) {
@@ -147,14 +144,16 @@ mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
         .run(() => super.removeCartItem(cartProduct));
   }
 
-  final _$loadCurrentCartAsyncAction = AsyncAction('loadCurrentCart');
+  final _$loadCurrentCartAsyncAction =
+      AsyncAction('_CarrinhoMobxBase.loadCurrentCart');
 
   @override
   Future<Null> loadCurrentCart(UserMobx user) {
     return _$loadCurrentCartAsyncAction.run(() => super.loadCurrentCart(user));
   }
 
-  final _$aumentaQuantidadeAsyncAction = AsyncAction('aumentaQuantidade');
+  final _$aumentaQuantidadeAsyncAction =
+      AsyncAction('_CarrinhoMobxBase.aumentaQuantidade');
 
   @override
   Future<Null> aumentaQuantidade(CartProduct cartProduct) {
@@ -162,7 +161,8 @@ mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
         .run(() => super.aumentaQuantidade(cartProduct));
   }
 
-  final _$diminuiQuantidadeAsyncAction = AsyncAction('diminuiQuantidade');
+  final _$diminuiQuantidadeAsyncAction =
+      AsyncAction('_CarrinhoMobxBase.diminuiQuantidade');
 
   @override
   Future<Null> diminuiQuantidade(CartProduct cartProduct) {
@@ -170,7 +170,7 @@ mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
         .run(() => super.diminuiQuantidade(cartProduct));
   }
 
-  final _$finishOrderAsyncAction = AsyncAction('finishOrder');
+  final _$finishOrderAsyncAction = AsyncAction('_CarrinhoMobxBase.finishOrder');
 
   @override
   Future<String> finishOrder() {
@@ -182,7 +182,8 @@ mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
 
   @override
   void somatorios() {
-    final _$actionInfo = _$_CarrinhoMobxBaseActionController.startAction();
+    final _$actionInfo = _$_CarrinhoMobxBaseActionController.startAction(
+        name: '_CarrinhoMobxBase.somatorios');
     try {
       return super.somatorios();
     } finally {
@@ -192,7 +193,8 @@ mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
 
   @override
   void limpar() {
-    final _$actionInfo = _$_CarrinhoMobxBaseActionController.startAction();
+    final _$actionInfo = _$_CarrinhoMobxBaseActionController.startAction(
+        name: '_CarrinhoMobxBase.limpar');
     try {
       return super.limpar();
     } finally {
@@ -201,12 +203,29 @@ mixin _$CarrinhoMobx on _CarrinhoMobxBase, Store {
   }
 
   @override
-  void atribuirDesconto(int descPerc, String cupom) {
-    final _$actionInfo = _$_CarrinhoMobxBaseActionController.startAction();
+  void atribuirDesconto(int descPerc, String? cupom) {
+    final _$actionInfo = _$_CarrinhoMobxBaseActionController.startAction(
+        name: '_CarrinhoMobxBase.atribuirDesconto');
     try {
       return super.atribuirDesconto(descPerc, cupom);
     } finally {
       _$_CarrinhoMobxBaseActionController.endAction(_$actionInfo);
     }
+  }
+
+  @override
+  String toString() {
+    return '''
+frete: ${frete},
+descontoPerc: ${descontoPerc},
+products: ${products},
+isLoading: ${isLoading},
+totalProds: ${totalProds},
+quantProds: ${quantProds},
+quantItens: ${quantItens},
+valorFrete: ${valorFrete},
+valorDesc: ${valorDesc},
+valorFinal: ${valorFinal}
+    ''';
   }
 }
