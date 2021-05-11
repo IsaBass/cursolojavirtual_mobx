@@ -26,6 +26,10 @@ Aulas apresentadas com ScopedModel , porém, como desafio, implementei utilizand
 - url_launcher
 
 ![screen](/imgs/screen01.png)
+![screen](/imgs/screen02.png)
+![screen](/imgs/screen03.png)
+![screen](/imgs/screen04.png)
+![screen](/imgs/screen05.png)
 
 <br>
 
