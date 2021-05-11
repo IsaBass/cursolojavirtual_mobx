@@ -10,4 +10,8 @@ class OrdersController {
   Future<List<Map<String, dynamic>>> getOrders() async {
     return await _repository.getOrders(user.firebaseUser!.uid);
   }
+
+  Stream<Map<String, dynamic>> getPedido(String orderId) {
+    return _repository.getPedido(orderId);
+  }
 }

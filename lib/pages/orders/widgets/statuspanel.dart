@@ -16,11 +16,11 @@ class StatusPanel extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              bolinha(1),
+              bolinha(1, 'Preparação'),
               linhaDivisao(),
-              bolinha(2),
+              bolinha(2, 'Transporte'),
               linhaDivisao(),
-              bolinha(3),
+              bolinha(3, 'Entrega'),
             ],
           ),
         ],
@@ -28,23 +28,51 @@ class StatusPanel extends StatelessWidget {
     );
   }
 
-  Widget bolinha(int numero) {
-    return Container(
-      width: 60,
-      height: 60,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: numero == status ? Colors.green : Colors.blueGrey[300],
-        borderRadius: BorderRadius.all(Radius.circular(50)),
-      ),
-      child: Text(
-        numero.toString(),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
+  Widget bolinha(int numero, String subtitle) {
+    Widget conteudo() => status > numero
+        ? Icon(
+            Icons.check,
+            color: Colors.grey[200],
+            size: 40,
+          )
+        : Text(
+            numero.toString(),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+
+    Color backColor() => numero < status
+        ? Colors.green
+        : numero == status
+            ? Colors.blue
+            : Colors.blueGrey[300]!;
+
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 28,
+          backgroundColor: backColor(),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              if (numero == status)
+                Container(
+                  height: 150,
+                  width: 150,
+                  // color: Colors.pink,
+                  child: CircularProgressIndicator.adaptive(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                ),
+              Center(child: conteudo()),
+            ],
+          ),
         ),
-      ),
+        Text(subtitle),
+      ],
     );
   }
 
